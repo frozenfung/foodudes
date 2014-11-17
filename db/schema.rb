@@ -11,16 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141115063353) do
+ActiveRecord::Schema.define(version: 20141117042242) do
 
-  create_table "friendlists", force: true do |t|
-    t.string   "friend_email"
+  create_table "friendships", force: true do |t|
     t.integer  "user_id"
+    t.integer  "friend_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "friendlists", ["user_id"], name: "index_friendlists_on_user_id", using: :btree
+  create_table "restaurants", force: true do |t|
+    t.string   "name"
+    t.string   "address"
+    t.string   "description"
+    t.string   "dish"
+    t.string   "notice"
+    t.float    "lng",         limit: 24
+    t.float    "lat",         limit: 24
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "count",                  default: 1
+  end
+
+  create_table "user_restaurants", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "restaurant_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_restaurants", ["restaurant_id"], name: "index_user_restaurants_on_restaurant_id", using: :btree
+  add_index "user_restaurants", ["user_id"], name: "index_user_restaurants_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"
