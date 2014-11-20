@@ -1,6 +1,7 @@
 class MapsController < ApplicationController
   def index
     if current_user
+      # Find marker datas from DB 
       @map_infos = []
       restaurant_name = []
       friends = current_user.friends
@@ -11,8 +12,8 @@ class MapsController < ApplicationController
           map_info = {}
           map_info['marker_lng'] = restaurant.lng
           map_info['marker_lat'] = restaurant.lat
-          map_info['marker_icon'] = friend.image
-          map_info['marker_name'] = friend.name
+          map_info['friend_icon'] = friend.image
+          map_info['friend_name'] = friend.name
           # map_info[info_window_infos] = []
           # if restaurant_name.include?(restaurant.name)
           #   map_info[infowindow_] = 
@@ -27,7 +28,10 @@ class MapsController < ApplicationController
         end
       end
       gon.map_infos = @map_infos
-      gon.map_infos_length = @map_infos.count
+
+      # Initialize User_restaurant to form
+      @user_restaurant = current_user.user_restaurants.new
+      @restaurant = Restaurant.new
     end
   end
 

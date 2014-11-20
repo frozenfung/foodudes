@@ -15,7 +15,7 @@ r0.lat = 25.026681
 
 r1 = Restaurant.new
 r1.name = 'WilBeck'
-r1.address = '台北市中正區南昌路二段105號'
+r1.address = '台北市中正區羅斯福路二段118號'
 r1.lng = 121.52272199999993
 r1.lat = 25.0263958
 
@@ -30,9 +30,9 @@ ur.save
 u = User.where(:fb_uid => '973493649331051').first
 ur = u.user_restaurants.new
 ur.restaurant = r1
-ur.comment = '便宜實惠'
-ur.dish = '魷魚羹意麵'
-ur.notice = '中午人很多要排隊'
+ur.comment = '不錯的咖啡'
+ur.dish = '無糖熱拿鐵'
+ur.notice = '下午人比較多'
 ur.save
 
 

@@ -1,52 +1,48 @@
-<script type='text/javascript'>
-
-
-//transfer Address to latlng
-var geocoder = new google.maps.Geocoder();
-function address_to_latlng(){
-  var address = document.getElementById('address').value;
-  geocoder.geocode(
-    {'address': address},
-    function(result, status){
-      if (status == google.maps.GeocoderStatus.OK){
-        alert(result[0].geometry.location);
-      }else{
-
-      }
-    }
-  );
-}
-
-
-// Build markers on Gmap
-var map_infos = []; // initialize array
-map_infos = gon.map_infos; // receive marker data from controller
-
-function initialize() {
-  var mapOptions = {
-    zoom: 17,
-    center: new google.maps.LatLng(25.026, 121.523)
-  };
-
-  var map = new google.maps.Map(document.getElementById('map'),
-      mapOptions);
-
-  for(var i = 0; i < gon.map_infos_length; i++){
-    var marker = new google.maps.Marker({
-      position: {
-        lat: map_infos[i]["marker_lat"], 
-        lng: map_infos[i]["marker_lng"]
-      },
-      icon: {
-        url: map_infos[i]["marker_icon"],
-        size: {width: 30, height: 30}
-      },
-      title: '<div>'+map_infos[i]["marker_name"]+'</div>',
-      map: map
-    });
-  }
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);
-
-</script>
+<div class="modal fade" id="recommend" tabindex="-1" role="dialog" aria-labelledby="recommendLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">New Recommend</h4>
+      </div>
+      <% if current_user %>
+      <%= form_for @user_restaurant, :url => restaurants_path do |u| %>
+      <div class="modal-body" style="width: 80%; margin:auto">
+        <ul>
+          <%= fields_for @restaurant do |r| %>
+          <li class="form-group">
+            <span><%= r.label 'Restaurant Name'%></span>
+            <span><%= r.text_field :name, :class => 'form-control', :placeholder => '金峰魯肉飯', :value => 'abc' %></span>
+          </li>
+          <li class="form-group">
+            <span><%= r.label 'Address'%></span>
+            <span><%= r.text_field :address, :class => 'form-control r_address', :placeholder => '台北市中正區羅斯福路二段25號', :value => '台北市中正區羅斯福路三段276號' %></span>
+          </li>
+          <li style='display: none'>
+            <%= r.text_field :lat, :class => 'r_lat' %>
+            <%= r.text_field :lng, :class => 'r_lng' %>
+          </li>
+          <% end %>
+          <li class="form-group">
+            <span><%= u.label 'The specialist cuisine'%></span>
+            <span><%= u.text_field :dish, :class => 'form-control', :placeholder => '西班牙海鮮飯, 無糖熱拿鐵', :value => 'abc' %></span>
+          </li>
+          <li class="form-group">
+            <span><%= u.label 'The reason why you want to recommend it (optional)'%></span>
+            <span><%= u.text_field :comment, :class => 'form-control', :placeholder => '燈光美氣氛佳', :value => 'abc' %></span>
+          </li>
+          <li class="form-group">
+            <span><%= u.label 'Others advice (optional)'%></span>
+            <span><%= u.text_field :notice, :class => 'form-control', :placeholder => '店裡面位置比較少, 請先定位', :value => 'abc' %></span>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= u.submit 'Recommend', :class => 'btn btn-primary' %>
+      </div>
+      <% end %> 
+      <% end %>
+    </div>
+  </div>
+</div>

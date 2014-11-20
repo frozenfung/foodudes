@@ -9,12 +9,26 @@ class User < ActiveRecord::Base
   def initialize_relationship_from_fb
     @graph = Koala::Facebook::API.new(self.fb_token)
     friends_id = @graph.get_connections("me", "friends").map { |x| x['id'] }
+    self.friendships.destroy_all
     friends_id.each do |friend_id|
       user = User.where(:fb_uid => friend_id).first
       friendship = self.friendships.new
       friendship.friend = user
-      friendship.save
+      friendship.save if friendship.friend
     end
+    # add self as friend
+    friendship = self.friendships.new
+    friendship.friend = self
+    friendship.save
+  end
+
+  def recommend(restaurant, params)
+    user_restaurant = self.user_restaurants.where(:restaurant_id => restaurant.id).first_or_initialize
+    user_restaurant.restaurant = restaurant
+    user_restaurant.comment = params[:comment]
+    user_restaurant.dish = params[:dish]
+    user_restaurant.notice = params[:notice]
+    user_restaurant.save
   end
 
   def self.find_or_create_from_auth_hash(auth_hash)
