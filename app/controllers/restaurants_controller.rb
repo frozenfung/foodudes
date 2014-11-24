@@ -5,7 +5,7 @@ class RestaurantsController < ApplicationController
 
   def create
     restaurant = Restaurant.find_or_create_from_form(restaurant_params)
-    current_user.recommend(restaurant, user_restaurant_params)
+    current_user.recommend(restaurant, recommend_params)
     redirect_to root_path
   end
 
@@ -15,8 +15,8 @@ class RestaurantsController < ApplicationController
     params.require(:restaurant).permit(:name, :address, :lng, :lat)
   end
 
-  def user_restaurant_params
-    params.require(:user_restaurant).permit(:comment, :dish, :notice)
+  def recommend_params
+    params.require(:recommend).permit(:content)
   end
 
 end

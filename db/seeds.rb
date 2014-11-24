@@ -20,19 +20,15 @@ r1.lng = 121.52272199999993
 r1.lat = 25.0263958
 
 u = User.where(:fb_uid => '973493649331051').first
-ur = u.user_restaurants.new
+ur = u.recommends.new
 ur.restaurant = r0
-ur.comment = '便宜實惠'
-ur.dish = '魷魚羹意麵'
-ur.notice = '中午人很多要排隊'
+ur.cotent = '便宜實惠, 中午人很多請提早前往'
 ur.save
 
 u = User.where(:fb_uid => '973493649331051').first
-ur = u.user_restaurants.new
+ur = u.recommends.new
 ur.restaurant = r1
-ur.comment = '不錯的咖啡'
-ur.dish = '無糖熱拿鐵'
-ur.notice = '下午人比較多'
+ur.content = '推薦無糖熱拿鐵, 店內氣氛昏暗不明很不錯'
 ur.save
 
 

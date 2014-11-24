@@ -6,9 +6,9 @@ class MapsController < ApplicationController
       restaurant_name = []
       friends = current_user.friends
       friends.each do |friend|
-        user_restaurants = friend.user_restaurants
-        user_restaurants.each do |user_restaurant|
-          restaurant = user_restaurant.restaurant
+        recommends = friend.recommends
+        recommends.each do |recommend|
+          restaurant = recommend.restaurant
           map_info = {}
           map_info['marker_lng'] = restaurant.lng
           map_info['marker_lat'] = restaurant.lat
@@ -30,7 +30,7 @@ class MapsController < ApplicationController
       gon.map_infos = @map_infos
 
       # Initialize User_restaurant to form
-      @user_restaurant = current_user.user_restaurants.new
+      @recommend = current_user.recommends.new
       @restaurant = Restaurant.new
     end
   end

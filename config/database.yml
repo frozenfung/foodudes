@@ -9,7 +9,7 @@ development:
 test:
   adapter: mysql2
   encoding: utf8
-  database: foodudes
+  database: foodudes_test
   host: localhost
   username: root
   password:

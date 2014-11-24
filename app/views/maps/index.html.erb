@@ -6,7 +6,7 @@
         <h4 class="modal-title" id="myModalLabel">New Recommend</h4>
       </div>
       <% if current_user %>
-      <%= form_for @user_restaurant, :url => restaurants_path do |u| %>
+      <%= form_for @recommend, :url => restaurants_path do |rc| %>
       <div class="modal-body" style="width: 80%; margin:auto">
         <ul>
           <%= fields_for @restaurant do |r| %>
@@ -24,22 +24,13 @@
           </li>
           <% end %>
           <li class="form-group">
-            <span><%= u.label 'The specialist cuisine'%></span>
-            <span><%= u.text_field :dish, :class => 'form-control', :placeholder => '西班牙海鮮飯, 無糖熱拿鐵', :value => 'abc' %></span>
+            <span><%= rc.label 'Why would you like to recommend?'%></span>
+            <span><%= rc.text_field :content, :class => 'form-control', :placeholder => '西班牙海鮮飯, 中午人需排隊, 平價又實惠', :value => 'abc' %></span>
           </li>
-          <li class="form-group">
-            <span><%= u.label 'The reason why you want to recommend it (optional)'%></span>
-            <span><%= u.text_field :comment, :class => 'form-control', :placeholder => '燈光美氣氛佳', :value => 'abc' %></span>
-          </li>
-          <li class="form-group">
-            <span><%= u.label 'Others advice (optional)'%></span>
-            <span><%= u.text_field :notice, :class => 'form-control', :placeholder => '店裡面位置比較少, 請先定位', :value => 'abc' %></span>
-          </li>
-        </ul>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <%= u.submit 'Recommend', :class => 'btn btn-primary' %>
+        <%= rc.submit 'Recommend', :class => 'btn btn-primary' %>
       </div>
       <% end %> 
       <% end %>

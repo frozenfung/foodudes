@@ -11,11 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141117082733) do
+ActiveRecord::Schema.define(version: 20141122082658) do
 
   create_table "friendships", force: true do |t|
     t.integer  "user_id"
     t.integer  "friend_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "recommends", force: true do |t|
+    t.integer  "restaurant_id"
+    t.integer  "user_id"
+    t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -28,19 +36,6 @@ ActiveRecord::Schema.define(version: 20141117082733) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "user_restaurants", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "restaurant_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "comment"
-    t.string   "dish"
-    t.string   "notice"
-  end
-
-  add_index "user_restaurants", ["restaurant_id"], name: "index_user_restaurants_on_restaurant_id", using: :btree
-  add_index "user_restaurants", ["user_id"], name: "index_user_restaurants_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"

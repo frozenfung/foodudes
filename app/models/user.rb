@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
-  has_many :user_restaurants
-  has_many :restaurants, :through => :user_restaurants
+  has_many :recommends
+  has_many :restaurants, :through => :recommends
 
   has_many :friendships
   has_many :friends, :through => :friendships
@@ -23,12 +23,10 @@ class User < ActiveRecord::Base
   end
 
   def recommend(restaurant, params)
-    user_restaurant = self.user_restaurants.where(:restaurant_id => restaurant.id).first_or_initialize
-    user_restaurant.restaurant = restaurant
-    user_restaurant.comment = params[:comment]
-    user_restaurant.dish = params[:dish]
-    user_restaurant.notice = params[:notice]
-    user_restaurant.save
+    recommend = self.recommends.where(:restaurant_id => restaurant.id).first_or_initialize
+    recommend.restaurant = restaurant
+    recommend.content = params[:content]
+    recommend.save
   end
 
   def self.find_or_create_from_auth_hash(auth_hash)
