@@ -1,7 +1,4 @@
 require 'spec_helper'
-require 'restaurant'
-
-
 RSpec.describe Restaurant, :type => :model do
 
   let(:params){ 
