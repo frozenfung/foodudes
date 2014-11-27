@@ -18,7 +18,10 @@ group :development do
   gem "better_errors"
 end
 
+gem 'capistrano-rails', :group => :development
+gem 'capistrano-passenger', :group => :development
 
+gem "jquery-ui-rails"
 gem "gon"
 gem "rspec", "~> 2.0"
 gem "rspec-rails", "~> 2.0"

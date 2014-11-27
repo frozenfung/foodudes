@@ -32,6 +32,8 @@ class MapsController < ApplicationController
       # Initialize User_restaurant to form
       @recommend = current_user.recommends.new
       @restaurant = Restaurant.new
+    else
+      gon.nothing = []
     end
   end
 

@@ -17,46 +17,125 @@ body{
   overflow: hidden;
 }
 
+/*control panel*/
+
+.control_panel{
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  left: 5%;
+  background-color: rgba(255, 255, 200, .9);
+  height: 25%;
+  width: 35%;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 2px 2px 3px 3px #999;
+  padding: 20px;
+}
+
+
+
 /*navigation bar*/
 
 nav{
-  position: relative;
-  z-index: 1;
   height: 60px;
-  box-shadow: 0 0 3px 3px #555;
-  background-color: #faffa3;
+}
+
+nav>ul{
+  clear: both;
+  padding-top: 20px;
+  width: 500px;
+  display: block;
+}
+
+nav>ul>li{
+  display: inline-block;
 }
 
 .nav_logo{
+  font-size: 10px;
+}
+
+.nav_logo>img:first-child{
   float: left;
-  font-size: 25px;
-  margin: 8px 0 5px 20px;
 }
 
-.fb_login, .control-panel{
+.nav_logo>div:last-child{
   float: right;
-  margin: 13px 30px 0 30px;  
+  margin: 10px 0;
 }
 
-.control-panel>li{
-  display:inline-block;
+.fb_login{
+  float: right;
 }
 
-.control-panel>li:last-child{
-  margin-left: 10px;
-  font-size: 18px;
+/*find food*/
+.find_food h2{
+  margin: 0 0 20px 0;
 }
 
-.control-panel>li>img{
-  border: 1px solid #555;
+/*food info*/
+.food_info{
+  z-index: 10;
+  position: absolute;
+  top: 35%;
+  left: 5%;
+  background-color: rgba(255, 255, 255, .9);
+  height: 60%;
+  width: 35%;
+  border-radius: 10px;
+  box-shadow: 2px 2px 3px 3px #999;
+  padding: 20px;
+  opacity: 0;
+  -webkit-transition: all .5s;
 }
+
+.food_info .X{
+  font-size: 16px;
+  color: #666;
+  position: absolute;
+  top: 2%;
+  left: 96%;
+  cursor: pointer;
+}
+
+.food_info .recommend{
+  position: absolute;
+  top: 16%;
+  left: 70%;
+  font-size: 40px;
+}
+
+.food_info ul{
+
+}
+
+.food_info>ul>li{
+  font-size: 20px;
+}
+
+.food_info .lat_info, .lng_info{
+  display: none;
+}
+
+.food_info_fadeIn{
+  top: 28%;
+  opacity: 1;
+  -webkit-transition: all .5s;
+}
+
+
 
 /* map */
 
-#map{
+#gmaps{
   margin-top: 0px;
   width: 100%;
   height: 800px;
+}
+
+#gmaps-place{
+  width: 450px;
+  margin: 0 10px 0 0;
 }
 
 .friend_icon{
