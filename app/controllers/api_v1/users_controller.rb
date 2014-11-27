@@ -1,6 +1,6 @@
 class ApiV1::UsersController < ApiController
   def login
-    @graph = Koala::Facebook::API.new(User.find(6).fb_token)
+    @graph = Koala::Facebook::API.new(param[:fb_token])
     # @graph = Koala::Facebook::API.new(params[:fb_token])
     auth_hash = @graph.get_object("me")
     auth_hash_modified = {
