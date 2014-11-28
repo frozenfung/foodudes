@@ -30,13 +30,30 @@ class User < ActiveRecord::Base
   end
 
   def self.find_or_create_from_auth_hash(auth_hash)
-    user = where(:fb_uid => auth_hash[:uid]).first_or_initialize
-    user.name = auth_hash[:info][:name]
-    user.email = auth_hash[:info][:email]
-    user.image = auth_hash[:info][:image]
-    user.fb_token = auth_hash[:credentials][:token]
-    user.fb_expires_at = Time.at(auth_hash[:credentials][:expires_at])
+    user = where(:fb_uid => auth_hash['id']).first_or_initialize
+    user.name = auth_hash['name']
+    user.email = auth_hash['email']
+    user.image = auth_hash['image']
+    user.fb_token = auth_hash['fb_token'] if auth_hash['fb_token']
+    user.fb_expires_at = auth_hash['fb_expires_at'] if auth_hash['fb_expires_at']
+    user.mobile_id = auth_hash['mobile_id'] if auth_hash['mobile_id']
     user.save!
     user
   end
+
+  def self.modified_mobile_id(params)
+    user = where(:mobile_id => params[:mobile_id]).first
+    user.mobile_id = SecureRandom.uuid
+    user.save!
+    "Sign Out Success!"
+  end
 end
+
+
+
+
+
+
+
+
+
