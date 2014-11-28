@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141122082658) do
+ActiveRecord::Schema.define(version: 20141127122337) do
 
   create_table "friendships", force: true do |t|
     t.integer  "user_id"
@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(version: 20141122082658) do
   end
 
   create_table "recommends", force: true do |t|
-    t.integer  "restaurant_id"
     t.integer  "user_id"
+    t.integer  "restaurant_id"
     t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -31,10 +31,11 @@ ActiveRecord::Schema.define(version: 20141122082658) do
   create_table "restaurants", force: true do |t|
     t.string   "name"
     t.string   "address"
-    t.float    "lng",        limit: 24
-    t.float    "lat",        limit: 24
+    t.float    "lng",          limit: 24
+    t.float    "lat",          limit: 24
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "phone_number"
   end
 
   create_table "users", force: true do |t|
@@ -46,6 +47,9 @@ ActiveRecord::Schema.define(version: 20141122082658) do
     t.datetime "fb_expires_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "mobile_id"
   end
+
+  add_index "users", ["mobile_id"], name: "index_users_on_mobile_id", using: :btree
 
 end
