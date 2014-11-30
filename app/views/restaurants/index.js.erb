@@ -1,0 +1,6 @@
+$('.recommend_show').removeClass('recommend_show');
+$('<%= @recommend_by_myself %>').addClass('recommend_show');
+$('.friend_info_content').html('');
+$('.friend_info_content').html("<%= raw (@recommend_infos) %>");
+// console.log("<%= raw (@recommend_infos) %>");
+
