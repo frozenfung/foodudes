@@ -21,14 +21,10 @@
           <%= current_user.name %> -->
         </div>
       </div>
-      <ul class='find_food'>
-        <h2>找美食</h2>
-        <form class='form-inline'>  
-          <li>
-            <input id="gmaps-place" type='text' class='form-control'/>
-          </li>
-        </form>
-      </ul>
+      <div class='find_food'>
+        <h2>我要找美食</h2>
+        <input id="gmaps-place" type='text' />
+      </div>
       <% else %>
         <div class='fb_login'><%= link_to 'facebook LogIn', "/auth/facebook", :class => 'btn btn-default' %></div>
       <% end %>
@@ -36,10 +32,19 @@
   </div>
   <div class='food_info'>
     <div class="X">X</div>
-    <button type="button" class="recommend btn btn-default btn-lg">推薦</button>
+      <button type="button" class="recommend btn btn-default btn-lg" data-toggle="modal" data-target="#recommend_form">
+        推薦
+      </button>
+      <button type="button" class="recommend_already btn btn-default btn-lg" disabled>
+        已推薦
+      </button>
     <h2>餐廳資訊</h2>
     <ul class="food_info_content">
     </ul>
+    <div class="friend_info_content_wrapper">
+      <ul class="friend_info_content">
+      </ul>
+    </div>
   </div>
   <div id="gmaps"></div>
   <%= yield %>

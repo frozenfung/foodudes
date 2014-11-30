@@ -17,6 +17,12 @@ body{
   overflow: hidden;
 }
 
+h2{
+  font-size: 24px;
+  font-weight: bold;  
+}
+
+
 /*control panel*/
 
 .control_panel{
@@ -28,29 +34,13 @@ body{
   height: 25%;
   width: 35%;
   border-radius: 0 0 10px 10px;
-  box-shadow: 2px 2px 3px 3px #999;
+  box-shadow: 2px 2px 3px 3px #666;
   padding: 20px;
 }
 
 
 
 /*navigation bar*/
-
-nav{
-  height: 60px;
-}
-
-nav>ul{
-  clear: both;
-  padding-top: 20px;
-  width: 500px;
-  display: block;
-}
-
-nav>ul>li{
-  display: inline-block;
-}
-
 .nav_logo{
   font-size: 10px;
 }
@@ -69,9 +59,40 @@ nav>ul>li{
 }
 
 /*find food*/
-.find_food h2{
-  margin: 0 0 20px 0;
+
+.find_food{
+  clear: both;
 }
+
+.find_food h2{
+  margin: 50px 0 20px 0;
+}
+
+.find_food input{
+  width: 90%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.find_food input:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
 
 /*food info*/
 .food_info{
@@ -79,14 +100,15 @@ nav>ul>li{
   position: absolute;
   top: 35%;
   left: 5%;
+  z-index: -999;
   background-color: rgba(255, 255, 255, .9);
-  height: 60%;
+  height: 65%;
   width: 35%;
   border-radius: 10px;
-  box-shadow: 2px 2px 3px 3px #999;
+  box-shadow: 2px 2px 3px 3px #666;
   padding: 20px;
   opacity: 0;
-  -webkit-transition: all .5s;
+  -webkit-transition: all .7s;
 }
 
 .food_info .X{
@@ -100,17 +122,23 @@ nav>ul>li{
 
 .food_info .recommend{
   position: absolute;
-  top: 16%;
+  top: 10%;
   left: 70%;
-  font-size: 40px;
+  font-size: 30px;
+  display: none;
 }
 
-.food_info ul{
-
+.food_info .recommend_already{
+  position: absolute;
+  top: 10%;
+  left: 70%;
+  font-size: 30px;
+  display: none;
+  background-color: #ff9;
 }
 
-.food_info>ul>li{
-  font-size: 20px;
+.food_info .recommend_show{
+  display: block;
 }
 
 .food_info .lat_info, .lng_info{
@@ -120,7 +148,55 @@ nav>ul>li{
 .food_info_fadeIn{
   top: 28%;
   opacity: 1;
-  -webkit-transition: all .5s;
+  z-index: 999;
+}
+
+.food_info_content{
+  width: 70%;
+  padding-bottom: 20px;
+}
+
+.food_info_content>li{
+  width: 100%;
+  font-size: 20px;
+}
+
+.food_info_content>li:last-child{
+  width: 130%;
+}
+
+.friend_info_content_wrapper{
+  border-top: 1px solid #666;
+  width: 100%;
+  overflow: hidden;
+}
+
+.friend_info_content{
+  width: 20000px;
+}
+
+.friend_info_content>li{
+  width: 31%;
+  float: left;
+  padding: 20px;
+  font-size: 16px;
+}
+
+.friend_info_content>li>div:first-child>img{
+  float: left;
+  border: 1px solid black;
+}
+
+.friend_info_content>li>div:first-child>div{
+  float: left;
+  font-size: 30px;
+  padding: 15px 0 0 20px;
+}
+
+.friend_info_content>li>div:last-child{
+  font-size: 18px;
+  padding-top: 20px;
+  clear: both;
 }
 
 
@@ -131,11 +207,6 @@ nav>ul>li{
   margin-top: 0px;
   width: 100%;
   height: 800px;
-}
-
-#gmaps-place{
-  width: 450px;
-  margin: 0 10px 0 0;
 }
 
 .friend_icon{
@@ -150,6 +221,21 @@ nav>ul>li{
   height: 36px; 
   background-color: #faffa3;
 }
+
+/*recommend form*/
+
+.form_hide{
+  display: none;
+}
+
+
+
+
+
+
+
+
+
 
 
 

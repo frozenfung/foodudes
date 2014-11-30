@@ -1,12 +1,29 @@
-
-<% if current_user %>
-<%= form_for @recommend, :url => restaurants_path do |rc| %>
-    <%= fields_for @restaurant do |r| %>
-      <%= r.text_field :name, :class => 'form_name_info' %>
-      <%= r.text_field :address, :class => 'form_address_info' %>
-      <%= r.text_field :lat, :class => 'form_lat_info' %>
-      <%= r.text_field :lng, :class => 'form_lng_info' %>
-    <% end %>
-    <%= rc.text_field :content, :class => 'form_content_info' %>
-<% end %> 
-<% end %>
+<div class="modal fade" id="recommend_form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h2 class="modal-title" id="myModalLabel">推薦餐廳</h2>
+      </div>
+      <div class="modal-body">
+        <% if current_user %>
+        <%= form_for @recommend, :url => restaurants_path do |rc| %>
+            <%= fields_for @restaurant do |r| %>
+              <%= r.text_field :name, :class => 'form_hide form_name' %>
+              <%= r.text_field :phone_number, :class => 'form_hide form_phone_number' %>
+              <%= r.text_field :address, :class => 'form_hide form_address' %>
+              <%= r.text_field :lat, :class => 'form_hide form_lat' %>
+              <%= r.text_field :lng, :class => 'form_hide form_lng' %>
+            <% end %>
+            <%= rc.label '推薦原因' %><br>
+            <%= rc.text_area :content, :class => 'form_content form-control', :size => '90x5'%>        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <%= rc.submit '推薦', :class => 'btn btn-default'%>
+      </div>
+      <% end %>
+      <% end %> 
+    </div>
+  </div>
+</div>

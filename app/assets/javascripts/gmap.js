@@ -7,22 +7,11 @@ var map_infos = [];
 map_infos = gon.map_infos; 
 
 
-// Build initialize Gmap and build markers on it
-//function initialize(){
-  // mapOptions = {
-  //   zoom: 14,
-  //   center: new google.maps.LatLng(25.026, 121.523)
-  // };
-
-
-  //map = new google.maps.Map(document.getElementById('gmaps'), mapOptions);
-//}  
-
-// AutoComplete setting
 function initialize() {
   mapOptions = {
+    disableDefaultUI: true,
     center: new google.maps.LatLng(25.026, 121.523),
-    zoom: 17
+    zoom: 10
   };
 
   map = new google.maps.Map(document.getElementById('gmaps'),
@@ -38,9 +27,11 @@ function initialize() {
     map: map,
     anchorPoint: new google.maps.Point(0, -29)
   });
+
   google.maps.event.addListener(marker, 'click', function() {
     $('.food_info').addClass('food_info_fadeIn');
   });
+
   google.maps.event.addListener(autocomplete, 'place_changed', function() {
     marker.setVisible(false);
     var place = autocomplete.getPlace();
@@ -56,7 +47,7 @@ function initialize() {
       map.setZoom(17);  // Why 17? Because it looks good.
     }
     marker.setIcon(/** @type {google.maps.Icon} */({
-      url: place.icon,
+      url: '/assets/foodudes_logo_icon.png',
       size: new google.maps.Size(71, 71),
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(17, 34),
@@ -79,19 +70,21 @@ function initialize() {
     var phone_number = (place.formatted_phone_number) ? place.formatted_phone_number : '';
     var lat = place.geometry.location.lat();
     var lng = place.geometry.location.lng();
-    var content = 
-      '<li class="name_info">名稱 : ' + name + '</li>' +
-      '<li class="phone_number_info">電話 : ' + phone_number + '</li>' +
-      '<li class="address_info">地址 : ' + address + '</li>' +
-      '<li class="lat_info">' + lat + '</li>' +
-      '<li class="lng_info">' + lng + '</li>';
-
-    $('.food_info_content').html(content);
+    setInfo(name, phone_number, address);
+    setFormData(name, phone_number, address, lat, lng);
+    $('.friend_info_content').html("<li>你真幸運！這家店還沒有你的朋友推薦過！<br>馬上成為第一個推薦這家餐廳的人！</li>");
   });
 
+
+  // Add Markers from Database
   if(gon.map_infos){
     addMarkers();
   }
+
+  // Listener
+  google.maps.event.addListener(map, 'center_changed', function(){
+    $('.food_info').removeClass('food_info_fadeIn');
+  });  
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -99,13 +92,21 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 // Add Markers on Map
 function addMarkers() {
-  //var rmarkers = [];
+  var markers = [];
   for(var i = 0; i < map_infos.length; i++){
-    var rmarker = new google.maps.Marker({
+    var titleList = 
+    map_infos[i]['name'] + ',' +
+    map_infos[i]['phone_number'] + ',' +
+    map_infos[i]['address'] + ',' +
+    map_infos[i]['marker_lat'] + ',' +
+    map_infos[i]['marker_lng']
+    ;  
+    var marker = new google.maps.Marker({
       position: new google.maps.LatLng(
-          map_infos[i]["marker_lat"], 
-          map_infos[i]["marker_lng"]
+          map_infos[i]['marker_lat'], 
+          map_infos[i]['marker_lng']
         ),
+      title: titleList,
       map: map
     });
     // var rmarker = new RichMarker({
@@ -117,29 +118,56 @@ function addMarkers() {
     //   map: map
     // })
     // .setShadow('5px -3px 3px #555');
-    google.maps.event.addListener(rmarker, 'click', function() {
-      $('.food_info').addClass('food_info_fadeIn');
+    google.maps.event.addListener(marker, 'click', function() {
+      var info = this.getTitle();
+      var info_array = info.split(',');
+      setInfo(info_array[0], info_array[1], info_array[2]);
+      setFormData(info_array[0], info_array[1], info_array[2], info_array[3], info_array[4]);
+      setFriendData(info_array[0], info_array[2]);
     });
-    //rmarkers.push(rmarker);
+    markers.push(marker);
   }
-  //var cluster = new MarkerClusterer(map, rmarkers);  
+  var cluster = new MarkerClusterer(map, markers);  
 }
 
+// Set recommend data
 
-
-// transfer Address to latlng
-function address_to_latlng(address){
-  geocoder.geocode(
-    {'address': address},
-    function(result, status){
-      if (status == google.maps.GeocoderStatus.OK){
-        var lat = result[0].geometry.location.lat();
-        var lng = result[0].geometry.location.lng();
-      }else{
-        alert('failure!');
-      }
-    }
+var setInfo = function(name, phone_number, address){
+  $('.food_info_content').html(
+    '<li class="name_info">名稱 : ' + name + '</li>' +
+    '<li class="phone_number_info">電話 : ' + phone_number + '</li>' +
+    '<li class="address_info">地址 : ' + address + '</li>'
   );
+  $('.food_info').addClass('food_info_fadeIn');
 }
+
+var setFormData = function(name, phone_number, address, lat, lng){
+  $('.form_name').val(name);
+  $('.form_phone_number').val(phone_number);
+  $('.form_address').val(address);
+  $('.form_lat').val(lat);
+  $('.form_lng').val(lng);
+}
+
+function setFriendData(name, address){
+  $.ajax({
+    url: '/restaurants',
+    type: 'GET',
+    data: {name: name, address: address},
+    contentType: 'script'
+  }).done(function(){
+    $('.friend_info_content>li').css('width', $(window).width()*0.31);
+  });
+}
+
+
+
+
+
+
+
+
+
+
 
 
