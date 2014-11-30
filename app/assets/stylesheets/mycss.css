@@ -22,15 +22,46 @@ h2{
   font-weight: bold;  
 }
 
+/*login panel*/
+.login_panel{
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  left: 5%;
+  background-color: rgba(255, 255, 255, .8);
+  height: 50%;
+  width: 35%;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 2px 2px 3px 3px #666;
+  padding: 20px;  
+}
+
+.login_panel>img{
+  display: block;
+  margin: auto;
+}
+
+.login_panel>div{
+  display: block;
+  padding: 30px 0;
+  margin: auto;
+  font-size: 20px;
+  text-align: center;
+}
+
+.login_panel>a{
+  display: block;
+  margin: auto;
+  width: 200px;
+}
 
 /*control panel*/
-
 .control_panel{
   z-index: 10;
   position: absolute;
   top: 0;
   left: 5%;
-  background-color: rgba(255, 255, 200, .9);
+  background-color: rgba(255, 255, 100, .8);
   height: 25%;
   width: 35%;
   border-radius: 0 0 10px 10px;
