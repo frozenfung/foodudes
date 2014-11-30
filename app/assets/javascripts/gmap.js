@@ -47,33 +47,33 @@ function initialize() {
       map.setZoom(17);  // Why 17? Because it looks good.
     }
     marker.setIcon(/** @type {google.maps.Icon} */({
-      url: '/assets/foodudes_logo_icon.png',
-      size: new google.maps.Size(71, 71),
-      origin: new google.maps.Point(0, 0),
-      anchor: new google.maps.Point(17, 34),
-      scaledSize: new google.maps.Size(35, 35)
-    }));
-    marker.setPosition(place.geometry.location);
-    marker.setVisible(true);
+        url: 'http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png',
+        // size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(64, 64)
+      }));
+      marker.setPosition(place.geometry.location);
+      marker.setVisible(true);
 
-    // food_info setting
-    var name = place.name;
-    var address = '';
-    if (place.address_components) {
-      address = [
-        (place.address_components[3] && place.address_components[3].short_name || ''),
-        (place.address_components[2] && place.address_components[2].short_name || ''),
-        (place.address_components[1] && place.address_components[1].short_name || ''),
-        (place.address_components[0] && place.address_components[0].short_name || '')            
-      ].join('');
-    }
-    var phone_number = (place.formatted_phone_number) ? place.formatted_phone_number : '';
-    var lat = place.geometry.location.lat();
-    var lng = place.geometry.location.lng();
-    setInfo(name, phone_number, address);
-    setFormData(name, phone_number, address, lat, lng);
-    $('.friend_info_content').html("<li>你真幸運！這家店還沒有你的朋友推薦過！<br>馬上成為第一個推薦這家餐廳的人！</li>");
-  });
+      // food_info setting
+      var name = place.name;
+      var address = '';
+      if (place.address_components) {
+        address = [
+          (place.address_components[3] && place.address_components[3].short_name || ''),
+          (place.address_components[2] && place.address_components[2].short_name || ''),
+          (place.address_components[1] && place.address_components[1].short_name || ''),
+          (place.address_components[0] && place.address_components[0].short_name || '')            
+        ].join('');
+      }
+      var phone_number = (place.formatted_phone_number) ? place.formatted_phone_number : '';
+      var lat = place.geometry.location.lat();
+      var lng = place.geometry.location.lng();
+      setInfo(name, phone_number, address);
+      setFormData(name, phone_number, address, lat, lng);
+      setFriendData(name, address);
+    });
 
 
   // Add Markers from Database
@@ -107,6 +107,7 @@ function addMarkers() {
           map_infos[i]['marker_lng']
         ),
       title: titleList,
+      icon: 'http://maps.google.com/mapfiles/kml/paddle/red-circle.png',
       map: map
     });
     // var rmarker = new RichMarker({
@@ -157,6 +158,9 @@ function setFriendData(name, address){
     contentType: 'script'
   }).done(function(){
     $('.friend_info_content>li').css('width', $(window).width()*0.31);
+    if ($('.friend_info_content').html() == '') {
+      $('.friend_info_content').html("<li>你真幸運！這家店還沒有被朋友推薦過！<br>馬上成為第一個推薦這家餐廳的人！</li>");
+    };  
   });
 }
 
