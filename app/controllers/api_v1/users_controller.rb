@@ -18,7 +18,7 @@ class ApiV1::UsersController < ApiController
   end
 
   def signout
-    message = User.modify_mobile_id(params)
-    render :json => message
+    User.modify_mobile_id(params)
+    render :text => 'OK'
   end
 end

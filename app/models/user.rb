@@ -45,7 +45,6 @@ class User < ActiveRecord::Base
     user = where(:mobile_id => params[:mobile_id]).first
     user.mobile_id = SecureRandom.uuid
     user.save!
-    "Sign Out Success!"
   end
 end
 
