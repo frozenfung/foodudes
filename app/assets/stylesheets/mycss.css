@@ -199,7 +199,8 @@ h2{
 .friend_info_content_wrapper{
   border-top: 1px solid #ccc;
   width: 100%;
-  overflow: hidden;
+  height: 55%;
+  overflow: auto;
 }
 
 .friend_info_content{
@@ -208,9 +209,24 @@ h2{
 
 .friend_info_content>li{
   width: 31%;
+  height: 100%;
   float: left;
   padding: 20px;
   font-size: 16px;
+
+  
+}
+
+.friend_info_content>li>div:first-child{
+
+}
+
+.friend_info_content>li>div:last-child{
+  font-size: 18px;
+  padding-top: 20px;
+  height: 100%;
+  clear: both;
+  overflow-y: scroll;
 }
 
 .friend_info_content>li>div:first-child>img{
@@ -223,14 +239,6 @@ h2{
   font-size: 30px;
   padding: 15px 0 0 20px;
 }
-
-.friend_info_content>li>div:last-child{
-  font-size: 18px;
-  padding-top: 20px;
-  clear: both;
-}
-
-
 
 /* map */
 

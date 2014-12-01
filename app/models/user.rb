@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   def recommend(restaurant, params)
     recommend = self.recommends.where(:restaurant_id => restaurant.id).first_or_initialize
     recommend.restaurant = restaurant
-    recommend.content = params[:content]
+    recommend.content = params[:content].gsub(/\n/, '<br>').squish
     recommend.save
   end
 

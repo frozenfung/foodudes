@@ -6,9 +6,9 @@ Rails.application.routes.draw do
     post 'auth/log_in' => 'users#login'
     delete 'auth/sign_out' => 'users#signout'
 
-    get 'map/index' => 'maps#index' 
-    post 'restaurant/recommend' => 'restaurants#recommend'    
-    get 'restaurant/find' => 'restaurants#find'
+    get 'maps/index' => 'maps#index' 
+    post 'restaurants/recommend' => 'restaurants#recommend'    
+    get 'restaurants/find' => 'restaurants#find'
   end
 
   root 'maps#index' 
