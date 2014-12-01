@@ -14,6 +14,7 @@ class MapsController < ApplicationController
           map_info['address'] = restaurant.address
           map_info['marker_lng'] = restaurant.lng
           map_info['marker_lat'] = restaurant.lat
+          map_info['friend_icon'] = friend.image
           map_info['user_id'] = []
           # restaurant.users.each do |user|
           #   map_info['user_id'] << user.id

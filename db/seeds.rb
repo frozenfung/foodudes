@@ -22,7 +22,7 @@ r1.lat = 25.0263958
 u = User.where(:fb_uid => '973493649331051').first
 ur = u.recommends.new
 ur.restaurant = r0
-ur.cotent = '便宜實惠, 中午人很多請提早前往'
+ur.content = '便宜實惠, 中午人很多請提早前往'
 ur.save
 
 u = User.where(:fb_uid => '973493649331051').first

@@ -1,6 +1,5 @@
 var map;
 var mapOptions;
-var geocoder = new google.maps.Geocoder();
 
 // receive marker data from controller
 var map_infos = [];
@@ -10,7 +9,7 @@ function initialize() {
   mapOptions = {
     disableDefaultUI: true,
     center: new google.maps.LatLng(25.026, 121.523),
-    zoom: 10
+    zoom: 16
   };
 
   map = new google.maps.Map(document.getElementById('gmaps'),
@@ -34,46 +33,47 @@ function initialize() {
   google.maps.event.addListener(autocomplete, 'place_changed', function() {
     marker.setVisible(false);
     var place = autocomplete.getPlace();
+    
     if (!place.geometry) {
-      return;
-    }
+      var places = searchBox.getPlaces();
 
-    // If the place has a geometry, then present it on a map.
-    if (place.geometry.viewport) {
-      map.fitBounds(place.geometry.viewport);
-    } else {
-      map.setCenter(place.geometry.location);
-      map.setZoom(17);  // Why 17? Because it looks good.
-    }
-    marker.setIcon(/** @type {google.maps.Icon} */({
-        url: 'http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png',
-        // size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(64, 64)
-      }));
-      marker.setPosition(place.geometry.location);
-      marker.setVisible(true);
-
-      // food_info setting
-      var name = place.name;
-      var address = '';
-      if (place.address_components) {
-        address = [
-          (place.address_components[3] && place.address_components[3].short_name || ''),
-          (place.address_components[2] && place.address_components[2].short_name || ''),
-          (place.address_components[1] && place.address_components[1].short_name || ''),
-          (place.address_components[0] && place.address_components[0].short_name || '')            
-        ].join('');
+    }else{
+      // If the place has a geometry, then present it on a map.
+      if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+      } else {
+        map.setCenter(place.geometry.location);
+        map.setZoom(17);  // Why 17? Because it looks good.
       }
-      var phone_number = (place.formatted_phone_number) ? place.formatted_phone_number : '';
-      var lat = place.geometry.location.lat();
-      var lng = place.geometry.location.lng();
-      setInfo(name, phone_number, address);
-      setFormData(name, phone_number, address, lat, lng);
-      setFriendData(name, address);
-    });
+      marker.setIcon(/** @type {google.maps.Icon} */({
+          url: 'http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png',
+          // size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(32, 32)
+        }));
+        marker.setPosition(place.geometry.location);
+        marker.setVisible(true);
 
+        // food_info setting
+        var name = place.name;
+        var address = '';
+        if (place.address_components) {
+          address = [
+            (place.address_components[3] && place.address_components[3].short_name || ''),
+            (place.address_components[2] && place.address_components[2].short_name || ''),
+            (place.address_components[1] && place.address_components[1].short_name || ''),
+            (place.address_components[0] && place.address_components[0].short_name || '')            
+          ].join('');
+        }
+        var phone_number = (place.formatted_phone_number) ? place.formatted_phone_number : '';
+        var lat = place.geometry.location.lat();
+        var lng = place.geometry.location.lng();
+        setInfo(name, phone_number, address);
+        setFormData(name, phone_number, address, lat, lng);
+        setFriendData(name, address); 
+    }
+  });
 
   // Add Markers from Database
   if(gon.map_infos){
@@ -106,7 +106,7 @@ function addMarkers() {
           map_infos[i]['marker_lng']
         ),
       title: titleList,
-      icon: 'http://maps.google.com/mapfiles/kml/paddle/red-circle.png',
+      icon: map_infos[i]['friend_icon'],
       map: map
     });
     // var rmarker = new RichMarker({
