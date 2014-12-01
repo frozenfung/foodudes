@@ -6,7 +6,6 @@ var geocoder = new google.maps.Geocoder();
 var map_infos = [];
 map_infos = gon.map_infos; 
 
-
 function initialize() {
   mapOptions = {
     disableDefaultUI: true,
