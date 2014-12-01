@@ -26,3 +26,4 @@ Things you may want to cover:
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
+[ ![Codeship Status for frozenfung/foodudes](https://codeship.com/projects/d0e23440-5b33-0132-8d6f-727edfa43f5b/status)](https://codeship.com/projects/50477)
