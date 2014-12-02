@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
     user.fb_uid = auth_hash['id']
     user.name = auth_hash['name']
     user.image = auth_hash['image']
-    user.fb_token = auth_hash['fb_token'] if auth_hash['fb_token']
+    user.fb_token = auth_hash['fb_token']
     user.fb_expires_at = auth_hash['fb_expires_at'] if auth_hash['fb_expires_at']
     user.mobile_id = auth_hash['mobile_id'] if auth_hash['mobile_id']
     user.save!
