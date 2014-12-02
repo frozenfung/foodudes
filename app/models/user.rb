@@ -31,8 +31,8 @@ class User < ActiveRecord::Base
 
   def self.find_or_create_from_auth_hash(auth_hash)
     user = where(:email => auth_hash['email']).first_or_initialize
+    user.fb_uid = auth_hash['id']
     user.name = auth_hash['name']
-    user.email = auth_hash['email']
     user.image = auth_hash['image']
     user.fb_token = auth_hash['fb_token'] if auth_hash['fb_token']
     user.fb_expires_at = auth_hash['fb_expires_at'] if auth_hash['fb_expires_at']

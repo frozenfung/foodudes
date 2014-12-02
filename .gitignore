@@ -4,6 +4,9 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+# Ignore setting
+/config/facebook.yml
+
 # Ignore bundler config.
 /.bundle
 
@@ -16,5 +19,26 @@
 /tmp
 
 
-# Ignore fb app setting
-/config/initializers/omniauth.rb
+.DS_Store
+.rspec
+Capfile
+app/.DS_Store
+app/assets/.DS_Store
+app/assets/images/.DS_Store
+app/assets/javascripts/api_v1/maps.js.coffee
+app/assets/javascripts/api_v1/restaurants.js.coffee
+app/assets/javascripts/api_v1/users.js.coffee
+app/assets/stylesheets/api_v1/maps.css.scss
+app/assets/stylesheets/api_v1/restaurants.css.scss
+app/assets/stylesheets/api_v1/users.css.scss
+app/controllers/.DS_Store
+app/controllers/api_v1/.DS_Store
+app/helpers/api_v1/maps_helper.rb
+app/views/users/index.html.erb
+config/deploy.rb
+config/deploy/production.rb
+config/deploy/staging.rb
+spec/controllers/api_v1/maps_controller_spec.rb
+spec/helpers/api_v1/maps_helper_spec.rb
+vendor/.DS_Store
+vendor/assets/.DS_Store
