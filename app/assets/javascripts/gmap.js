@@ -5,9 +5,12 @@ var mapOptions;
 var map_infos = [];
 map_infos = gon.map_infos; 
 
+// markers for search API
+var markers = [];
+
 function initialize() {
   mapOptions = {
-    disableDefaultUI: true,
+    // disableDefaultUI: true,
     center: new google.maps.LatLng(25.026, 121.523),
     zoom: 16
   };
@@ -15,11 +18,11 @@ function initialize() {
   map = new google.maps.Map(document.getElementById('gmaps'),
     mapOptions);
 
-  var input = /** @type {HTMLInputElement} */(
-      document.getElementById('gmaps-place'));
+  var input = document.getElementById('gmaps-place');
   var autocomplete = new google.maps.places.Autocomplete(input);
+  var searchBox = new google.maps.places.SearchBox(input);
+  
   //autocomplete.bindTo('bounds', map);
-
   //var infowindow = new google.maps.InfoWindow();
   var marker = new google.maps.Marker({
     map: map,
@@ -30,13 +33,25 @@ function initialize() {
     $('.food_info').addClass('food_info_fadeIn');
   });
 
+  // search box 
+  google.maps.event.addListener(searchBox, 'places_changed', function() {
+    var places = searchBox.getPlaces();
+    if (places.length == 0) {
+      return;
+    }
+
+    var place = places[0];
+    map.setCenter(place.geometry.location);
+    map.setZoom(15);
+  });
+
+  // autocomplete
   google.maps.event.addListener(autocomplete, 'place_changed', function() {
     marker.setVisible(false);
     var place = autocomplete.getPlace();
     
     if (!place.geometry) {
-      var places = searchBox.getPlaces();
-
+      return;
     }else{
       // If the place has a geometry, then present it on a map.
       if (place.geometry.viewport) {
