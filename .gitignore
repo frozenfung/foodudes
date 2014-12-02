@@ -5,7 +5,7 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore setting
-/config/initializers/omniauth.rb
+/config/local_varible.yml
 
 # Ignore bundler config.
 /.bundle
