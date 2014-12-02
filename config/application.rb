@@ -6,15 +6,6 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-Rails.application.configure do
-    config.before_configuration do
-      env_file = File.join(Rails.root, 'config', 'local_varible.yml')
-      YAML.load(File.open(env_file)).each do |key, value|
-        ENV[key.to_s] = value
-      end if File.exists?(env_file)
-    end
-end
-
 module Foodudes
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

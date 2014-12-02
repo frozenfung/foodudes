@@ -5,7 +5,7 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore setting
-/config/local_varible.yml
+/config/facebook.yml
 
 # Ignore bundler config.
 /.bundle
