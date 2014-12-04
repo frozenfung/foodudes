@@ -3,7 +3,7 @@ class MapsController < ApplicationController
     if current_user
       # Find marker datas from DB 
       @map_infos = []
-      @user_infos = []
+      # @user_infos = []
       friends = current_user.friends
       friends.each do |friend|
         friend.restaurants.each do |restaurant|
@@ -15,7 +15,7 @@ class MapsController < ApplicationController
           map_info['marker_lng'] = restaurant.lng
           map_info['marker_lat'] = restaurant.lat
           map_info['friend_icon'] = friend.image
-          map_info['user_id'] = []
+          # map_info['user_id'] = []
           # restaurant.users.each do |user|
           #   map_info['user_id'] << user.id
           # end
@@ -29,6 +29,9 @@ class MapsController < ApplicationController
         # user_info['image'] = friend.image
         # @user_infos << user_info
       end
+      # remove same restaurant
+      @map_infos = @map_infos.uniq{ |i| i['name'] && i['address']}
+
       # Pass varible to javascript
       gon.map_infos = @map_infos
       # gon.user_infos = @user_infos

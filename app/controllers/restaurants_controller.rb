@@ -4,7 +4,7 @@ class RestaurantsController < ApplicationController
     @recommend_by_myself = '.recommend'
     restaurant = Restaurant.where(:name => params[:name]).where(:address => params[:address]).first
     if restaurant
-      restaurant.recommends.each do |recommend|
+      restaurant.recommends.order('created_at DESC').each do |recommend|
         if current_user.friends.include?(recommend.user)
           @recommend_by_myself = '.recommend_already' if recommend.user == current_user
           recommend_info = '<li>'
@@ -17,6 +17,7 @@ class RestaurantsController < ApplicationController
           @recommend_infos += recommend_info
         end
       end
+      @recommends_count = restaurant.recommends.count
     end
     respond_to do |format|
       format.js

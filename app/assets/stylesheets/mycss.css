@@ -172,6 +172,32 @@ h2{
   display: block;
 }
 
+.food_info .left_arrow{
+  z-index: 999;
+  position: absolute;
+  top: 68%;
+  left: 1%;
+  width: 0;
+  height: 0;
+  border: 10px solid rgba(191, 191, 191, .6);
+  border-color: transparent rgba(191, 191, 191, .6) transparent transparent;
+  cursor: pointer;
+  display: none;
+}
+
+.food_info .right_arrow{
+  z-index: 999;
+  position: absolute;
+  top: 68%;
+  left: 95%;
+  width: 0;
+  height: 0;
+  border: 10px solid rgba(191, 191, 191, .6);
+  border-color: transparent transparent transparent rgba(191, 191, 191, .6);
+  cursor: pointer;
+}
+
+
 .food_info .lat_info, .lng_info{
   display: none;
 }
@@ -196,7 +222,12 @@ h2{
   width: 130%;
 }
 
+.friends_count{
+  display: none;
+}
+
 .friend_info_content_wrapper{
+  position: relative;
   border-top: 1px solid #ccc;
   width: 100%;
   height: 55%;
@@ -205,6 +236,9 @@ h2{
 
 .friend_info_content{
   width: 20000px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
 }
 
 .friend_info_content>li{
@@ -213,8 +247,6 @@ h2{
   float: left;
   padding: 20px;
   font-size: 16px;
-
-  
 }
 
 .friend_info_content>li>div:first-child{
