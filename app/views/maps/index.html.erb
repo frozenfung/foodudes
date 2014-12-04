@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         <% if current_user %>
-        <%= form_for @recommend, :url => restaurants_path do |rc| %>
+        <%= form_for @recommend, :remote => true, :url => restaurants_path do |rc| %>
             <%= fields_for @restaurant do |r| %>
               <%= r.text_field :name, :class => 'form_hide form_name' %>
               <%= r.text_field :phone_number, :class => 'form_hide form_phone_number' %>

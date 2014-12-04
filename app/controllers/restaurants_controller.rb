@@ -26,7 +26,16 @@ class RestaurantsController < ApplicationController
   def create
     restaurant = Restaurant.find_or_create_from_form(restaurant_params)
     current_user.recommend(restaurant, recommend_params)
-    redirect_to root_path
+    @info = []
+    @info[0] = restaurant_params['name']
+    @info[1] = restaurant_params['phone_number']
+    @info[2] = restaurant_params['address']
+    @info[3] = restaurant_params['lat']
+    @info[4] = restaurant_params['lng']
+    @info[5] = current_user.image
+    respond_to do |format|
+      format.js
+    end
   end
 
   def find

@@ -1,12 +1,13 @@
 var map;
 var mapOptions;
-
+var marker_recommend;
 // receive marker data from controller
 var map_infos = [];
 map_infos = gon.map_infos; 
 
-// markers for search API
+// variables from addMarkers
 var markers = [];
+var cluster;
 
 function initialize() {
   mapOptions = {
@@ -30,6 +31,7 @@ function initialize() {
   });
 
   google.maps.event.addListener(marker, 'click', function() {
+    marker_recommend = this;
     $('.food_info').addClass('food_info_fadeIn');
   });
 
@@ -90,7 +92,7 @@ function initialize() {
     }
   });
 
-  // Add Markers from Database
+  // Draw Markers from Database
   if(gon.map_infos){
     addMarkers();
   }
@@ -106,7 +108,6 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 // Add Markers on Map
 function addMarkers() {
-  var markers = [];
   for(var i = 0; i < map_infos.length; i++){
     var titleList = 
     map_infos[i]['name'] + ',' +
@@ -142,7 +143,7 @@ function addMarkers() {
     });
     markers.push(marker);
   }
-  var cluster = new MarkerClusterer(map, markers);  
+  cluster = new MarkerClusterer(map, markers);  
 }
 
 // Set recommend data
@@ -164,7 +165,7 @@ var setFormData = function(name, phone_number, address, lat, lng){
   $('.form_lng').val(lng);
 }
 
-function setFriendData(name, address){
+var setFriendData = function(name, address){
   $.ajax({
     url: '/restaurants',
     type: 'GET',
@@ -178,8 +179,30 @@ function setFriendData(name, address){
   });
 }
 
-
-
+// Ajax recommend data
+var recommend_callback = function(restaurant_params){
+  $('#recommend_form').modal('hide');
+  $('.food_info').removeClass('food_info_fadeIn');
+  restaurant_params = restaurant_params.replace(/&quot;/g, '"');
+  restaurant_params = JSON.parse(restaurant_params);
+  // console.log(restaurant_params);
+  marker_recommend.setMap(null);
+  var marker = new google.maps.Marker({
+    animation: google.maps.Animation.DROP,
+    position: new google.maps.LatLng(
+        restaurant_params[3], 
+        restaurant_params[4]
+      ),
+    icon: restaurant_params[5],
+    map: map
+  });
+  google.maps.event.addListener(marker, 'click', function() {
+    setInfo(restaurant_params[0], restaurant_params[1], restaurant_params[2]);
+    setFriendData(restaurant_params[0], restaurant_params[2]);
+  });
+  markers.push(marker);
+  cluster.addMarker(marker); 
+}
 
 
 
