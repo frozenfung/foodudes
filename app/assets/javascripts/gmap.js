@@ -57,6 +57,7 @@ function initialize() {
       return;
     }else{
       // If the place has a geometry, then present it on a map.
+      marker_recommend = this;
       if (place.geometry.viewport) {
         map.fitBounds(place.geometry.viewport);
       } else {
@@ -68,28 +69,27 @@ function initialize() {
           // size: new google.maps.Size(71, 71),
           origin: new google.maps.Point(0, 0),
           anchor: new google.maps.Point(17, 34),
-          scaledSize: new google.maps.Size(32, 32)
-        }));
-        marker.setPosition(place.geometry.location);
-        marker.setVisible(true);
-
-        // food_info setting
-        var name = place.name;
-        var address = '';
-        if (place.address_components) {
-          address = [
-            (place.address_components[3] && place.address_components[3].short_name || ''),
-            (place.address_components[2] && place.address_components[2].short_name || ''),
-            (place.address_components[1] && place.address_components[1].short_name || ''),
-            (place.address_components[0] && place.address_components[0].short_name || '')            
-          ].join('');
-        }
-        var phone_number = (place.formatted_phone_number) ? place.formatted_phone_number : '';
-        var lat = place.geometry.location.lat();
-        var lng = place.geometry.location.lng();
-        setInfo(name, phone_number, address);
-        setFormData(name, phone_number, address, lat, lng);
-        setFriendData(name, address); 
+          scaledSize: new google.maps.Size(64, 64)
+      }));
+      marker.setPosition(place.geometry.location);
+      marker.setVisible(true);
+      // food_info setting
+      var name = place.name;
+      var address = '';
+      if (place.address_components) {
+        address = [
+          (place.address_components[3] && place.address_components[3].short_name || ''),
+          (place.address_components[2] && place.address_components[2].short_name || ''),
+          (place.address_components[1] && place.address_components[1].short_name || ''),
+          (place.address_components[0] && place.address_components[0].short_name || '')            
+        ].join('');
+      }
+      var phone_number = (place.formatted_phone_number) ? place.formatted_phone_number : '';
+      var lat = place.geometry.location.lat();
+      var lng = place.geometry.location.lng();
+      setInfo(name, phone_number, address);
+      setFormData(name, phone_number, address, lat, lng);
+      setFriendData(name, address); 
     }
   });
 
@@ -140,6 +140,9 @@ function addMarkers() {
     // })
     // .setShadow('5px -3px 3px #555');
     google.maps.event.addListener(marker, 'click', function() {
+      if(marker_recommend != null){
+        marker_recommend.setMap(null);
+      }
       if (this.getAnimation() != null) {
         this.setAnimation(null);    
       } else {
@@ -157,7 +160,7 @@ function addMarkers() {
     });
     markers.push(marker);
   }
-  cluster = new MarkerClusterer(map, markers);  
+  cluster = new MarkerClusterer(map, markers);
 }
 
 // Set recommend data
