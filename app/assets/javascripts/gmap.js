@@ -1,6 +1,7 @@
 var map;
 var mapOptions;
-var marker_recommend;
+var marker_recommend = null;
+var marker_animation = null;
 // receive marker data from controller
 var map_infos = [];
 map_infos = gon.map_infos; 
@@ -100,6 +101,9 @@ function initialize() {
   // Listener
   google.maps.event.addListener(map, 'center_changed', function(){
     $('.food_info').removeClass('food_info_fadeIn');
+    if(marker_animation != null){
+      marker_animation.setAnimation(null);
+    }
   });  
 }
 
@@ -117,6 +121,7 @@ function addMarkers() {
     map_infos[i]['marker_lng']
     ;  
     var marker = new google.maps.Marker({
+      // animation: google.maps.Animation.DROP,
       position: new google.maps.LatLng(
           map_infos[i]['marker_lat'], 
           map_infos[i]['marker_lng']
@@ -135,6 +140,15 @@ function addMarkers() {
     // })
     // .setShadow('5px -3px 3px #555');
     google.maps.event.addListener(marker, 'click', function() {
+      if (this.getAnimation() != null) {
+        this.setAnimation(null);    
+      } else {
+        if (marker_animation != null){
+          marker_animation.setAnimation(null);
+        }
+        this.setAnimation(google.maps.Animation.BOUNCE);
+        marker_animation = this;
+      }
       var info = this.getTitle();
       var info_array = info.split(',');
       setInfo(info_array[0], info_array[1], info_array[2]);
