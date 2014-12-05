@@ -6,6 +6,7 @@ var marker_animation = null;
 var map_infos = [];
 map_infos = gon.map_infos; 
 
+// alert(map_infos[4]['address'])
 // variables from addMarkers
 var markers = [];
 var cluster;
@@ -114,10 +115,10 @@ google.maps.event.addDomListener(window, 'load', initialize);
 function addMarkers() {
   for(var i = 0; i < map_infos.length; i++){
     var titleList = 
-    map_infos[i]['name'] + ',' +
-    map_infos[i]['phone_number'] + ',' +
-    map_infos[i]['address'] + ',' +
-    map_infos[i]['marker_lat'] + ',' +
+    map_infos[i]['name'] + '~_~' +
+    map_infos[i]['phone_number'] + '~_~' +
+    map_infos[i]['address'] + '~_~' +
+    map_infos[i]['marker_lat'] + '~_~' +
     map_infos[i]['marker_lng']
     ;  
     var marker = new google.maps.Marker({
@@ -153,7 +154,7 @@ function addMarkers() {
         marker_animation = this;
       }
       var info = this.getTitle();
-      var info_array = info.split(',');
+      var info_array = info.split('~_~');
       setInfo(info_array[0], info_array[1], info_array[2]);
       setFormData(info_array[0], info_array[1], info_array[2], info_array[3], info_array[4]);
       setFriendData(info_array[0], info_array[2]);
