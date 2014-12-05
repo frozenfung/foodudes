@@ -183,7 +183,9 @@ var setFormData = function(name, phone_number, address, lat, lng){
 }
 
 var setFriendData = function(name, address){
-  $('.food_info .right_left').css('display', 'none');
+  li_index = 0;
+  $('.friend_info_content').css("left", 0);
+  $('.food_info .left_arrow').css('display', 'none');
   $('.food_info .right_arrow').css('display', 'none');
   $.ajax({
     url: '/restaurants',
@@ -199,7 +201,7 @@ var setFriendData = function(name, address){
         $('.food_info .right_arrow').css('display', 'block');
       }
     }  
-    console.log(parseInt($('.friends_count').html()));
+    // console.log(parseInt($('.friends_count').html()));
   });
 }
 

@@ -31,7 +31,6 @@ $(function(){
   $('.X').click(function(){
     $(this).parent().removeClass('food_info_fadeIn');
     marker_animation.setAnimation(null);
-    $('.food_info_content').css("left", 0);
   });
 
 })
