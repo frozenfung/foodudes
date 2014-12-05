@@ -17,7 +17,7 @@ class RestaurantsController < ApplicationController
           @recommend_infos += recommend_info
         end
       end
-      @recommends_count = restaurant.recommends.count
+      @friends_count = restaurant.recommends.count
     end
     respond_to do |format|
       format.js

@@ -10,7 +10,6 @@ $(function(){
     }, 500);
     li_index -= 1;
     $('.food_info .left_arrow').css('display', 'block');
-    console.log();
     if( parseInt($('.friends_count').html()) + li_index == 1 ){
       $(this).css('display', 'none')
     }

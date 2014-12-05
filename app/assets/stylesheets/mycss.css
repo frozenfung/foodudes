@@ -28,11 +28,17 @@ h2{
   position: absolute;
   top: 0;
   left: 5%;
-  background-color: rgba(255, 255, 255, .8);
+  background-color: rgba(255, 239, 255, .9);
   height: 50%;
   width: 35%;
-  border-radius: 0 0 10px 10px;
-  box-shadow: 2px 2px 3px 3px #666;
+  -webkit-border-radius: 0 0 10px 10px;
+     -moz-border-radius: 0 0 10px 10px;
+       -o-border-radius: 0 0 10px 10px;
+          border-radius: 0 0 10px 10px;
+  -webkit-box-shadow: 2px 2px 3px 3px #666;
+     -moz-box-shadow: 2px 2px 3px 3px #666;
+       -o-box-shadow: 2px 2px 3px 3px #666;
+          box-shadow: 2px 2px 3px 3px #666;
   padding: 20px;  
 }
 
@@ -61,11 +67,17 @@ h2{
   position: absolute;
   top: 0;
   left: 5%;
-  background-color: rgba(255, 255, 100, .8);
-  height: 25%;
+  background-color: rgba(255, 255, 239, .9);
+  height: 26%;
   width: 35%;
-  border-radius: 0 0 10px 10px;
-  box-shadow: 2px 2px 3px 3px #666;
+  -webkit-border-radius: 0 0 10px 10px;
+     -moz-border-radius: 0 0 10px 10px;
+       -o-border-radius: 0 0 10px 10px;
+          border-radius: 0 0 10px 10px;
+  -webkit-box-shadow: 2px 2px 3px 3px #666;
+     -moz-box-shadow: 2px 2px 3px 3px #666;
+       -o-box-shadow: 2px 2px 3px 3px #666;
+          box-shadow: 2px 2px 3px 3px #666;
   padding: 20px;
 }
 
@@ -96,7 +108,9 @@ h2{
 }
 
 .find_food h2{
+  font-size: 20px;
   margin: 50px 0 20px 0;
+  color: rgba(16, 40, 40, .9);
 }
 
 .find_food input{
@@ -132,11 +146,17 @@ h2{
   top: 35%;
   left: 5%;
   z-index: -999;
-  background-color: rgba(255, 255, 255, .9);
+  background-color: rgba(239, 255, 255, .9);
   height: 65%;
   width: 35%;
-  border-radius: 10px;
-  box-shadow: 2px 2px 3px 3px #666;
+  -webkit-border-radius: 10px;
+     -moz-border-radius: 10px;
+       -o-border-radius: 10px;
+          border-radius: 10px;
+  -webkit-box-shadow: 2px 2px 3px 3px #666;
+     -moz-box-shadow: 2px 2px 3px 3px #666;
+       -o-box-shadow: 2px 2px 3px 3px #666;
+          box-shadow: 2px 2px 3px 3px #666;
   padding: 20px;
   opacity: 0;
   -webkit-transition: all .7s;
@@ -179,10 +199,34 @@ h2{
   left: 1%;
   width: 0;
   height: 0;
-  border: 10px solid rgba(191, 191, 191, .6);
-  border-color: transparent rgba(191, 191, 191, .6) transparent transparent;
+  border: 10px solid rgba(64, 64, 64, .8);
+  border-color: transparent rgba(64, 64, 64, .8) transparent transparent;
   cursor: pointer;
   display: none;
+  -webkit-animation: shake-left 1s infinite alternate;
+     -moz-animation: shake-left 1s infinite alternate;
+       -o-animation: shake-left 1s infinite alternate;
+          animation: shake-left 1s infinite alternate;
+}
+
+@-webkit-keyframes shake-left {
+    25%  {left: 1.8%; }
+    75%  {left: 0.2%; }
+}
+
+@-moz-keyframes shake-left {
+    25%  {left: 1.8%; }
+    75%  {left: 0.2%; }
+}
+
+@-o-keyframes shake-left {
+    25%  {left: 1.8%; }
+    75%  {left: 0.2%; }
+}
+
+@keyframes shake-left {
+    25%  {left: 1.8%; }
+    75%  {left: 0.2%; }
 }
 
 .food_info .right_arrow{
@@ -192,18 +236,42 @@ h2{
   left: 95%;
   width: 0;
   height: 0;
-  border: 10px solid rgba(191, 191, 191, .6);
-  border-color: transparent transparent transparent rgba(191, 191, 191, .6);
+  border: 10px solid rgba(64, 64, 64, .8);
+  border-color: transparent transparent transparent rgba(64, 64, 64, .8);
   cursor: pointer;
+  display: none;
+  -webkit-animation: shake-right 1s infinite alternate;
+     -moz-animation: shake-right 1s infinite alternate;
+       -o-animation: shake-right 1s infinite alternate;
+          animation: shake-right 1s infinite alternate;
 }
 
+@-webkit-keyframes shake-right {
+    25%  {left: 95.8%; }
+    75%  {left: 94.2%; }
+}
+
+@-moz-keyframes shake-right {
+    25%  {left: 95.8%; }
+    75%  {left: 94.2%; }
+}
+
+@-o-keyframes shake-right {
+    25%  {left: 95.8%; }
+    75%  {left: 94.2%; }
+}
+
+@keyframes shake-right {
+    25%  {left: 95.8%; }
+    75%  {left: 94.2%; }
+}
 
 .food_info .lat_info, .lng_info{
   display: none;
 }
 
 .food_info_fadeIn{
-  top: 28%;
+  top: 29%;
   opacity: 1;
   z-index: 999;
 }

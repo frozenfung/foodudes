@@ -62,7 +62,7 @@ function initialize() {
         map.fitBounds(place.geometry.viewport);
       } else {
         map.setCenter(place.geometry.location);
-        map.setZoom(17);  // Why 17? Because it looks good.
+        map.setZoom(18);  // Why 17? Because it looks good.
       }
       marker.setIcon(/** @type {google.maps.Icon} */({
           url: 'http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png',
@@ -183,6 +183,8 @@ var setFormData = function(name, phone_number, address, lat, lng){
 }
 
 var setFriendData = function(name, address){
+  $('.food_info .right_left').css('display', 'none');
+  $('.food_info .right_arrow').css('display', 'none');
   $.ajax({
     url: '/restaurants',
     type: 'GET',
@@ -192,7 +194,12 @@ var setFriendData = function(name, address){
     $('.friend_info_content>li').css('width', $(window).width()*0.31);
     if ($('.friend_info_content').html() == '') {
       $('.friend_info_content').html("<li>你真幸運！這家店還沒有被朋友推薦過！<br>馬上成為第一個推薦這家餐廳的人！</li>");
-    };  
+    }else{
+      if ( parseInt($('.friends_count').html()) > 1 ){
+        $('.food_info .right_arrow').css('display', 'block');
+      }
+    }  
+    console.log(parseInt($('.friends_count').html()));
   });
 }
 
