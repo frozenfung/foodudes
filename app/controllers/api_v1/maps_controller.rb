@@ -15,9 +15,12 @@ class ApiV1::MapsController < ApiController
           map_info['address'] = restaurant.address
           map_info['marker_lng'] = restaurant.lng
           map_info['marker_lat'] = restaurant.lat
-          map_info['user_id'] = []
+          map_info['user'] = []
           restaurant.users.each do |user|
-            map_info['user_id'] << user.id
+            user_info = {}
+            user_info['id'] = user.id
+            user_info['content'] = Recommend.where(:user_id => user.id).where(:restaurant_id => restaurant.id).first.content
+            map_info['user'] << user_info
           end
           map_infos << map_info
         end
