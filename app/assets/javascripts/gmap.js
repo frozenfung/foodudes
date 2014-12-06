@@ -6,7 +6,6 @@ var marker_animation = null;
 var map_infos = [];
 map_infos = gon.map_infos; 
 
-// alert(map_infos[4]['address'])
 // variables from addMarkers
 var markers = [];
 var cluster;
@@ -58,7 +57,6 @@ function initialize() {
       return;
     }else{
       // If the place has a geometry, then present it on a map.
-      marker_recommend = this;
       if (place.geometry.viewport) {
         map.fitBounds(place.geometry.viewport);
       } else {
@@ -90,7 +88,10 @@ function initialize() {
       var lng = place.geometry.location.lng();
       setInfo(name, phone_number, address);
       setFormData(name, phone_number, address, lat, lng);
-      setFriendData(name, address); 
+      setFriendData(name, address);
+      if ( marker_recommend != null){
+        marker_recommend.setMap(map);
+      }
     }
   });
 
@@ -122,7 +123,6 @@ function addMarkers() {
     map_infos[i]['marker_lng']
     ;  
     var marker = new google.maps.Marker({
-      // animation: google.maps.Animation.DROP,
       position: new google.maps.LatLng(
           map_infos[i]['marker_lat'], 
           map_infos[i]['marker_lng']
@@ -131,19 +131,17 @@ function addMarkers() {
       icon: map_infos[i]['friend_icon'],
       map: map
     });
-    // var rmarker = new RichMarker({
+    // var marker = new RichMarker({
     //   position: new google.maps.LatLng(
     //       map_infos[i]["marker_lat"], 
     //       map_infos[i]["marker_lng"]
     //     ),
     //   content: '<div class="marker_background"><img src="'+map_infos[i]["friend_icon"]+'" class="friend_icon" /></div>',
+    //   title: titleList,
     //   map: map
     // })
     // .setShadow('5px -3px 3px #555');
     google.maps.event.addListener(marker, 'click', function() {
-      if(marker_recommend != null){
-        marker_recommend.setMap(null);
-      }
       if (this.getAnimation() != null) {
         this.setAnimation(null);    
       } else {
@@ -209,7 +207,7 @@ var setFriendData = function(name, address){
 // Ajax recommend data
 var recommend_callback = function(restaurant_params, count){
   recommend_count = count;
-  console.log(recommend_count);
+  // console.log(recommend_count);
   $('#recommend_form').modal('hide');
   $('.food_info').removeClass('food_info_fadeIn');
   restaurant_params = restaurant_params.replace(/&quot;/g, '"');
@@ -226,6 +224,15 @@ var recommend_callback = function(restaurant_params, count){
     map: map
   });
   google.maps.event.addListener(marker, 'click', function() {
+    if (this.getAnimation() != null) {
+      this.setAnimation(null);    
+    } else {
+      if (marker_animation != null){
+        marker_animation.setAnimation(null);
+      }
+      this.setAnimation(google.maps.Animation.BOUNCE);
+      marker_animation = this;
+    }
     setInfo(restaurant_params[0], restaurant_params[1], restaurant_params[2]);
     setFriendData(restaurant_params[0], restaurant_params[2]);
   });
