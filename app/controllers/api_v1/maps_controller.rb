@@ -19,6 +19,8 @@ class ApiV1::MapsController < ApiController
           restaurant.users.each do |user|
             user_info = {}
             user_info['id'] = user.id
+            user_info['name'] = user.name
+            user_info['image'] = user.image
             user_info['content'] = Recommend.where(:user_id => user.id).where(:restaurant_id => restaurant.id).first.content
             map_info['user'] << user_info
           end
@@ -30,6 +32,7 @@ class ApiV1::MapsController < ApiController
         user_info['name'] = friend.name
         user_info['email'] = friend.email
         user_info['image'] = friend.image
+        user_info['recommend_count'] = friend.restaurants.count
         user_infos << user_info
       end
       recommend_infos = {}
