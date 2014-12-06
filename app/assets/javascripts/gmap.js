@@ -170,7 +170,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 // Add Markers on Map
 function addMarkers() {
   for(var i = 0; i < map_infos.length; i++){
-    var titleList = 
+    var fake_cursor = 
     map_infos[i]['name'] + '~_~' +
     map_infos[i]['phone_number'] + '~_~' +
     map_infos[i]['address'] + '~_~' +
@@ -181,7 +181,7 @@ function addMarkers() {
           map_infos[i]['marker_lat'], 
           map_infos[i]['marker_lng']
         ),
-      title: titleList,
+      cursor: fake_cursor,
       icon: map_infos[i]['friend_icon'],
       map: map
     });
@@ -205,7 +205,7 @@ function addMarkers() {
         this.setAnimation(google.maps.Animation.BOUNCE);
         marker_animation = this;
       }
-      var info = this.getTitle();
+      var info = this.getCursor();
       var info_array = info.split('~_~');
       setInfo(info_array[0], info_array[1], info_array[2]);
       setFormData(info_array[0], info_array[1], info_array[2], info_array[3], info_array[4]);
@@ -266,6 +266,7 @@ var recommend_callback = function(restaurant_params, count){
   restaurant_params = JSON.parse(restaurant_params);
   recommend_marker.setIcon(restaurant_params[5]);
   recommend_marker.setAnimation(google.maps.Animation.DROP);
+  cluster.addMarker(recommend_marker);
   // setTimeout(function(){
   //   recommend_marker.setAnimation(null);
   // }, 850);
