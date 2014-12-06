@@ -22,6 +22,7 @@ class ApiV1::MapsController < ApiController
             user_info['name'] = user.name
             user_info['image'] = user.image
             user_info['content'] = Recommend.where(:user_id => user.id).where(:restaurant_id => restaurant.id).first.content
+            user_info['content'] = user_info['content'].gsub(/<br>/, '\n')
             map_info['user'] << user_info
           end
           map_infos << map_info
