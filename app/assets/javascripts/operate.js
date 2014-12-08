@@ -44,4 +44,18 @@ $(function(){
       find_food_string = string;
     }
   });
+
+  $('.find_food h2 .search_area').click(function(){
+    for(var i = 0; i < markers.length; i++){
+      markers[i].setMap(map);
+      cluster.addMarker(markers[i]);
+    }
+  });
+
+  $('.find_food h2 .recommend_restaurant').click(function(){
+    for(var i = 0; i < markers.length; i++){
+      markers[i].setMap(null);
+    }
+    cluster.clearMarkers();
+  });
 })

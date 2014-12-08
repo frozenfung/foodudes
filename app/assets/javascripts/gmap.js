@@ -85,6 +85,7 @@ function initialize() {
       });
 
       markers_candidate.push(marker);
+      markers.push(marker);
       bounds.extend(place.geometry.location);
 
       google.maps.event.addListener(marker, 'click', function() {
