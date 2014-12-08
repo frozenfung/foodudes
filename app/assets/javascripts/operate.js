@@ -1,5 +1,5 @@
 var li_index = 0;
-
+var find_food_string = 'e.g. 鼎泰豐, 豪大雞排, 牛肉麵...';
 $(function(){
 
   $('.food_info .right_arrow').click(function(){
@@ -35,4 +35,13 @@ $(function(){
     }
   });
 
+  $('.find_food h2 span').click(function(){
+    if ( !$(this).hasClass('select') ){
+      $('.find_food h2 .select').removeClass('select');
+      $(this).addClass('select');
+      var string = $('#gmaps-place').attr('placeholder');
+      $('#gmaps-place').attr('placeholder', find_food_string);
+      find_food_string = string;
+    }
+  });
 })

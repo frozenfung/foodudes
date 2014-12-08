@@ -110,7 +110,20 @@ h2{
 .find_food h2{
   font-size: 20px;
   margin: 50px 0 20px 0;
-  color: rgba(16, 40, 40, .9);
+  color: rgba(16, 40, 40, .3);
+  cursor: pointer;
+  transition: all 1s;
+}
+
+.find_food h2 span:hover{
+  color: rgba(16, 40, 40, .9);  
+}
+
+.find_food h2 .select{
+  border-bottom: 2px solid rgba(16, 16, 16, .9);
+  font-size: 24px;
+  color: rgba(16, 16, 16, .9);
+  margin: 10px;
 }
 
 .find_food input{
