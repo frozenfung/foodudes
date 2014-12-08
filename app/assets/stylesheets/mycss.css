@@ -322,10 +322,11 @@ h2{
   position: absolute;
   left: 0px;
   top: 0px;
+  width: 100%;
 }
 
 .friend_info_content>li{
-  width: 31%;
+  width: 90%;
   height: 100%;
   float: left;
   padding: 20px;

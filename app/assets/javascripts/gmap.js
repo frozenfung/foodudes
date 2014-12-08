@@ -249,6 +249,7 @@ var setFriendData = function(name, lat, lng){
     $('.friend_info_content>li').css('width', $(window).width()*0.31);
     if ($('.friend_info_content').html() == '') {
       $('.friend_info_content').html("<li>你真幸運！這家店還沒有被朋友推薦過！<br>馬上成為第一個推薦這家餐廳的人！</li>");
+      $('.friends_count').html('0');  
     }
   });
 }
