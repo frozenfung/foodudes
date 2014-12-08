@@ -259,6 +259,7 @@ var setFriendData = function(name, lat, lng){
 // Ajax recommend data
 var recommend_callback = function(restaurant_params, count){
   recommend_count = count;
+  $('.form_content').html('');
   $('#recommend_form').modal('hide');
   $('.food_info').removeClass('food_info_fadeIn');
   restaurant_params = restaurant_params.replace(/&quot;/g, '"');

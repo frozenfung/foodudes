@@ -50,6 +50,7 @@ $(function(){
       markers[i].setMap(map);
       cluster.addMarker(markers[i]);
     }
+    $('#gmaps-place').val('');
   });
 
   $('.find_food h2 .recommend_restaurant').click(function(){
@@ -57,5 +58,6 @@ $(function(){
       markers[i].setMap(null);
     }
     cluster.clearMarkers();
+    $('#gmaps-place').val('');
   });
 })
