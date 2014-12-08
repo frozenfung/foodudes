@@ -2,7 +2,7 @@ class RestaurantsController < ApplicationController
   def index
     @recommend_infos = ''
     @recommend_by_myself = '.recommend'
-    restaurant = Restaurant.where(:name => params[:name]).where(:address => params[:address]).first
+    restaurant = Restaurant.where(:name => params[:name]).where(:lat => params[:lat]).where(:lng => params[:lng]).first
     if restaurant
       restaurant.recommends.order('created_at DESC').each do |recommend|
         if current_user.friends.include?(recommend.user)

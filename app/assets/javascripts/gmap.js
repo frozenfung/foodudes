@@ -1,7 +1,6 @@
 var map;
 var mapOptions;
 var recommend_marker = null;
-var marker_recommend = null;
 var marker_animation = null;
 // receive marker data from controller
 var map_infos = [];
@@ -33,8 +32,7 @@ function initialize() {
     anchorPoint: new google.maps.Point(0, -29)
   });
 
-  google.maps.event.addListener(marker, 'click', function() {
-    marker_recommend = this;
+  google.maps.event.addListener(marker, 'click', function() {   
     $('.food_info').addClass('food_info_fadeIn');
   });
 
@@ -95,7 +93,7 @@ function initialize() {
         var info_array = info.split('~_~');
         setInfo(info_array[0], info_array[1], info_array[2]);
         setFormData(info_array[0], info_array[1], info_array[2], info_array[3], info_array[4]);
-        setFriendData(info_array[0], info_array[2]);
+        setFriendData(info_array[0], info_array[3], info_array[4]);
       });
     }
     map.fitBounds(bounds);
@@ -209,7 +207,7 @@ function addMarkers() {
       var info_array = info.split('~_~');
       setInfo(info_array[0], info_array[1], info_array[2]);
       setFormData(info_array[0], info_array[1], info_array[2], info_array[3], info_array[4]);
-      setFriendData(info_array[0], info_array[2]);
+      setFriendData(info_array[0], info_array[3], info_array[4]);
     });
     markers.push(marker);
   }
@@ -235,7 +233,7 @@ var setFormData = function(name, phone_number, address, lat, lng){
   $('.form_lng').val(lng);
 }
 
-var setFriendData = function(name, address){
+var setFriendData = function(name, lat, lng){
   li_index = 0;
   $('.friend_info_content').css("left", 0);
   $('.food_info .left_arrow').css('display', 'none');
@@ -243,7 +241,7 @@ var setFriendData = function(name, address){
   $.ajax({
     url: '/restaurants',
     type: 'GET',
-    data: {name: name, address: address},
+    data: {name: name, lat: lat, lng: lng},
     contentType: 'script'
   }).done(function(){
     $('.friend_info_content>li').css('width', $(window).width()*0.31);
