@@ -205,7 +205,14 @@ h2{
   display: block;
 }
 
-.food_info .left_arrow{
+.friends_count_wrapper{
+  position: absolute;
+  top: 36%;
+  left: 80%;
+  font-size: 14px;
+  color: rgba(16, 40, 40, .9);
+}
+/*.food_info .left_arrow{
   z-index: 999;
   position: absolute;
   top: 68%;
@@ -278,7 +285,7 @@ h2{
     25%  {left: 95.8%; }
     75%  {left: 94.2%; }
 }
-
+*/
 .food_info .lat_info, .lng_info{
   display: none;
 }
@@ -303,10 +310,6 @@ h2{
   width: 130%;
 }
 
-.friends_count{
-  display: none;
-}
-
 .friend_info_content_wrapper{
   position: relative;
   border-top: 1px solid #ccc;
@@ -316,7 +319,6 @@ h2{
 }
 
 .friend_info_content{
-  width: 20000px;
   position: absolute;
   left: 0px;
   top: 0px;
