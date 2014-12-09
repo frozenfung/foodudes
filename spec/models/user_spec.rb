@@ -3,51 +3,23 @@ require 'spec_helper'
 RSpec.describe User, :type => :model do
 
   before do 
-    @user = User.new(:id => 1)
-    @restaurant = Restaurant.new(:id => 1)
-    @params = {:content => 'QQ'}
-
-    @auth_hash_web = {
-      :uid => '123456',
-      :info => {
-        :name => 'frozen',
-        :email => 'frozenfung@gmail.com',
-        :image => 'xxx.png'
-      },
-      :credentials => {
-        :token => 'abc',
-        :expires_at => Time.now
-      }
-    }
-
-    @auth_hash_mobile = {
-
-    }
-
+    @user1 = User.create!( :fb_uid => '111', :fb_token => "aaa")
+    @user2 = User.create!( :fb_uid => '222', :fb_token => "bbb")
   end
 
-  it "should build a recommend" do
-    @user.recommend(@restaurant, @params)
-    expect(Recommend.last.content).to eq('QQ')
+  it "should initialize relationship from db" do    
+    fb_graph = double("graph")
+    expect(Koala::Facebook::API).to receive(:new).with(@user2.fb_token).and_return(fb_graph)
+    expect(fb_graph).to receive(:get_connections).and_return( [{ 'id' => @user1.fb_uid }] )
+  
+    # execute
+    @user2.initialize_relationship_from_fb
+
+    # verify
+    expect(Friendship.count).to eq(1)
+    f = Friendship.last
+    expect(f.friend).to eq(@user1)
+    expect(f.user).to eq(@user2)
   end
-
-  it "should find or create from auth_hash_web" do
-    User.find_or_create_from_auth_hash(@auth_hash_web)
-    expect(User.where(:fb_token => 'abc').first.name).to eq('frozen')
-  end
-
-  it "should find or create from auth_hash_mobile" do
-    User.find_or_create_from_auth_hash(@auth_hash_web)
-    expect(User.where(:fb_token => 'abc').first.name).to eq('frozen')
-  end
-
-  # it "should build friendship by fb_uid" do
-  #   friends_id.each do |friend_id|
-  #     user = User.where(:fb_uid => friend_id).first
-  #     User.find(3).friends = user
-  #   end
-  #   expect(Friendship.count).to eq('2')
-  # end
-
 
 end

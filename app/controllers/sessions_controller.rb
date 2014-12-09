@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   def create
     auth_hash_modified = {
-      'id' => auth_hash[:uid],
+      'fb_uid' => auth_hash[:uid],
       'name' => auth_hash[:info][:name],
       'email' => auth_hash[:info][:email],
       'image' => auth_hash[:info][:image],

@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   end
 
   def self.find_or_create_from_auth_hash(auth_hash)
-    user = where(:id => auth_hash['id']).first_or_initialize
+    user = where(:fb_uid => auth_hash['fb_uid']).first_or_initialize
     user.email = auth_hash['email']
     user.name = auth_hash['name']
     user.image = auth_hash['image']

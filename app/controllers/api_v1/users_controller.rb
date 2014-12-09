@@ -4,7 +4,7 @@ class ApiV1::UsersController < ApiController
     # @graph = Koala::Facebook::API.new(params[:fb_token])
     auth_hash = @graph.get_object("me")
     auth_hash_modified = {
-      'id' => auth_hash['id'],
+      'fb_uid' => auth_hash['id'],
       'name' => "#{auth_hash['last_name']} #{auth_hash['first_name']}",
       'email' => auth_hash['email'],
       'image' => "http://graph.facebook.com/#{auth_hash['id']}/picture",
