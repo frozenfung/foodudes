@@ -50,12 +50,19 @@ $(function(){
       markers[i].setMap(map);
       cluster.addMarker(markers[i]);
     }
+    for(var j = 0; j < markers_candidate.length; j++){
+      markers_candidate[j].setMap(null);
+    }
+
     $('#gmaps-place').val('');
   });
 
   $('.find_food h2 .recommend_restaurant').click(function(){
     for(var i = 0; i < markers.length; i++){
       markers[i].setMap(null);
+    }
+    for(var j = 0; j < markers_candidate.length; j++){
+      markers_candidate[j].setMap(null);
     }
     cluster.clearMarkers();
     $('#gmaps-place').val('');

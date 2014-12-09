@@ -85,7 +85,6 @@ function initialize() {
       });
 
       markers_candidate.push(marker);
-      markers.push(marker);
       bounds.extend(place.geometry.location);
 
       google.maps.event.addListener(marker, 'click', function() {
@@ -256,7 +255,6 @@ var setFriendData = function(name, lat, lng){
 
 // Ajax recommend data
 var recommend_callback = function(restaurant_params, count){
-  recommend_count = count;
   $('.form_content').html('');
   $('#recommend_form').modal('hide');
   $('.food_info').removeClass('food_info_fadeIn');
@@ -264,10 +262,8 @@ var recommend_callback = function(restaurant_params, count){
   restaurant_params = JSON.parse(restaurant_params);
   recommend_marker.setIcon(restaurant_params[5]);
   recommend_marker.setAnimation(google.maps.Animation.DROP);
+  markers.push(recommend_marker); 
   cluster.addMarker(recommend_marker);
-  // setTimeout(function(){
-  //   recommend_marker.setAnimation(null);
-  // }, 850);
 }
 
 
