@@ -5,6 +5,15 @@ RSpec.describe User, :type => :model do
   before do 
     @user1 = User.create!( :fb_uid => '111', :fb_token => "aaa")
     @user2 = User.create!( :fb_uid => '222', :fb_token => "bbb")
+    @user3 = User.create!( :mobile_id => '123')
+    @auth_hash = {
+      'fb_uid' => '333',
+      'email' => 'aaa@gmail.com',
+      'name' => 'fung',
+      'image' => 'fung.png',
+      'fb_token' => 'abcdefg',
+      'mobile_id' => '1234567'
+    }
   end
 
   it "should initialize relationship from db" do    
@@ -22,4 +31,22 @@ RSpec.describe User, :type => :model do
     expect(f.user).to eq(@user2)
   end
 
+  it "should find_or_create_from_auth_hash" do
+    user = User.find_or_create_from_auth_hash(@auth_hash)
+    expect(user.name).to eq('fung')
+    expect(user.fb_expires_at).to eq(nil)
+
+    user = User.where(:name => 'fung').first
+    expect(user.mobile_id).to eq('1234567')
+  end
+
+  it "should modified mobile id" do
+    user = User.modified_mobile_id( { :mobile_id => '123' } )
+    expect(user.mobile_id).to_not eq('123')
+  end
 end
+
+
+
+
+
