@@ -22,13 +22,6 @@ class User < ActiveRecord::Base
     friendship.save
   end
 
-  def recommend(restaurant, params)
-    recommend = self.recommends.where(:restaurant_id => restaurant.id).first_or_initialize
-    recommend.restaurant = restaurant
-    recommend.content = params[:content].gsub(/\n/, '<br>').squish
-    recommend.save
-  end
-
   def self.find_or_create_from_auth_hash(auth_hash)
     user = where(:email => auth_hash['email']).first_or_initialize
     user.fb_uid = auth_hash['id']

@@ -26,7 +26,7 @@ class RestaurantsController < ApplicationController
 
   def create
     restaurant = Restaurant.find_or_create_from_form(restaurant_params)
-    current_user.recommend(restaurant, recommend_params)
+    Recommend.new_recommend(current_user, restaurant, recommend_params)
     @info = []
     @info[0] = restaurant_params['name']
     @info[1] = restaurant_params['phone_number']
@@ -38,11 +38,6 @@ class RestaurantsController < ApplicationController
       format.js
     end
   end
-
-  def find
-    
-  end
-
 
   protected
 

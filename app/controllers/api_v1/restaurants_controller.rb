@@ -10,7 +10,7 @@ class ApiV1::RestaurantsController < ApiController
         :lng => params[:lng]
       }
       restaurant = Restaurant.find_or_create_from_form(modified_params)
-      Recommend.new_recommend(mobile_user, restaurant, params[:content])
+      Recommend.new_recommend(mobile_user, restaurant, params)
       render :text => 'Recommend Success!'
     end
   end
