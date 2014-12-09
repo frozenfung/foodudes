@@ -7,24 +7,24 @@ class User < ActiveRecord::Base
   has_many :friends, :through => :friendships
 
   def initialize_relationship_from_fb
-    @graph = Koala::Facebook::API.new(self.fb_token)
-    friends_id = @graph.get_connections("me", "friends").map { |x| x['id'] }
-    self.friendships.destroy_all
-    friends_id.each do |friend_id|
-      user = User.where(:fb_uid => friend_id).first
-      friendship = self.friendships.new
-      friendship.friend = user
-      friendship.save if friendship.friend
+    graph = Koala::Facebook::API.new(self.fb_token)
+    friend_uids = graph.get_connections("me", "friends").map { |x| x['id'] }
+    self.class.transaction do 
+      self.friendships.destroy_all
+      friend_uids.each do |friend_uid|
+        friend = User.where(:fb_uid => friend_uid).first
+        if friend 
+          friendship = self.friendships.new
+          friendship.friend = friend
+          friendship.save!
+        end
+      end
     end
-    # add self as friend
-    friendship = self.friendships.new
-    friendship.friend = self
-    friendship.save
   end
 
   def self.find_or_create_from_auth_hash(auth_hash)
-    user = where(:email => auth_hash['email']).first_or_initialize
-    user.fb_uid = auth_hash['id']
+    user = where(:id => auth_hash['id']).first_or_initialize
+    user.email = auth_hash['email']
     user.name = auth_hash['name']
     user.image = auth_hash['image']
     user.fb_token = auth_hash['fb_token']
