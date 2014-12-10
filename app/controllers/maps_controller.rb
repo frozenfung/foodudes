@@ -13,7 +13,7 @@ class MapsController < ApplicationController
         @map_infos << transform_dataStructure(restaurant, current_user)
       end
       # remove same restaurant
-      @map_infos = @map_infos.uniq{ |i| i['name'] && i['address']}
+      @map_infos = @map_infos.uniq{ |i| i['name']}
 
       # Pass varible to javascript
       gon.map_infos = @map_infos
@@ -27,4 +27,15 @@ class MapsController < ApplicationController
   end
 
   protected
+
+  def transform_dataStructure(restaurant, friend)
+    map_info = {}
+    map_info['name'] = restaurant.name
+    map_info['phone_number'] = restaurant.phone_number
+    map_info['address'] = restaurant.address
+    map_info['marker_lng'] = restaurant.lng
+    map_info['marker_lat'] = restaurant.lat
+    map_info['friend_icon'] = friend.image
+    map_info
+  end  
 end
