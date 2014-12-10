@@ -2,10 +2,13 @@ class RestaurantsController < ApplicationController
   
   def index    
     restaurant = Restaurant.where(:name => params[:name]).where(:lat => params[:lat]).where(:lng => params[:lng]).first
-    
-    @recommends = restaurant.recommends.order('created_at DESC')
-    @friends_count = restaurant.recommends.count
-
+    if restaurant
+      @recommends = restaurant.recommends.order('created_at DESC')
+      @friends_count = restaurant.recommends.count
+    else
+      @recommends = []
+      @friends_count = 0
+    end
     respond_to do |format|
       format.js
     end
