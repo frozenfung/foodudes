@@ -88,6 +88,15 @@ function initialize() {
       bounds.extend(place.geometry.location);
 
       google.maps.event.addListener(marker, 'click', function() {
+        if (this.getAnimation() != null) {
+          this.setAnimation(null);    
+        } else {
+          if (marker_animation != null){
+            marker_animation.setAnimation(null);
+          }
+          this.setAnimation(google.maps.Animation.BOUNCE);
+          marker_animation = this;
+        }        
         recommend_marker = this;
         var info = this.getCursor();
         var info_array = info.split('~_~');
@@ -203,6 +212,7 @@ function addMarkers() {
         this.setAnimation(google.maps.Animation.BOUNCE);
         marker_animation = this;
       }
+      recommend_marker = this;
       var info = this.getCursor();
       var info_array = info.split('~_~');
       setInfo(info_array[0], info_array[1], info_array[2]);
@@ -259,6 +269,7 @@ var recommend_callback = function(restaurant_params, count){
   $('.food_info').removeClass('food_info_fadeIn');
   restaurant_params = restaurant_params.replace(/&quot;/g, '"');
   restaurant_params = JSON.parse(restaurant_params);
+  marker_animation.setAnimation(null);
   recommend_marker.setIcon(restaurant_params[5]);
   recommend_marker.setAnimation(google.maps.Animation.DROP);
   markers.push(recommend_marker); 
