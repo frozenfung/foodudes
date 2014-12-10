@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
     user
   end
 
-  def self.modified_mobile_id(params)
+  def self.modify_mobile_id(params)
     user = where(:mobile_id => params[:mobile_id]).first
     if user
       user.mobile_id = SecureRandom.uuid
