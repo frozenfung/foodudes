@@ -6,7 +6,7 @@ class Recommend < ActiveRecord::Base
     recommend = Recommend.new
     recommend.user = user
     recommend.restaurant = restaurant
-    recommend.content = params[:content].gsub(/\n/, '<br>').squish
+    recommend.content = params[:content]
     recommend.save!
   end
 end

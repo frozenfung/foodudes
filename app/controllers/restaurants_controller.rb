@@ -1,24 +1,11 @@
 class RestaurantsController < ApplicationController
-  def index
-    @recommend_infos = ''
-    @recommend_by_myself = '.recommend'
+  
+  def index    
     restaurant = Restaurant.where(:name => params[:name]).where(:lat => params[:lat]).where(:lng => params[:lng]).first
-    if restaurant
-      restaurant.recommends.order('created_at DESC').each do |recommend|
-        if current_user.friends.include?(recommend.user)
-          @recommend_by_myself = '.recommend_already' if recommend.user == current_user
-          recommend_info = '<li>'
-          recommend_info += '<div>'
-          recommend_info += '<img src=\"'+ recommend.user.image + '\"/>'
-          recommend_info += '<div>' + recommend.user.name + '推薦</div>'
-          recommend_info += '</div>'
-          recommend_info += '<div>' + recommend.content + '</div>'
-          recommend_info += '</li>'
-          @recommend_infos += recommend_info
-        end
-      end
-      @friends_count = restaurant.recommends.count
-    end
+    
+    @recommends = restaurant.recommends.order('created_at DESC')
+    @friends_count = restaurant.recommends.count
+
     respond_to do |format|
       format.js
     end

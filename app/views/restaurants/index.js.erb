@@ -1,7 +1,8 @@
+<% result = (render :partial => "recommend", :collection => @recommends) %>
 $('.recommend_show').removeClass('recommend_show');
-$('<%= @recommend_by_myself %>').addClass('recommend_show');
+$('<%= recommend_by_myself(@recommends) %>').addClass('recommend_show');
 $('.friend_info_content').html('');
-$('.friend_info_content').html("<%= raw (@recommend_infos) %>");
+$('.friend_info_content').html("<%= j(result) %>");
 $('.friends_count').html("<%= @friends_count %>");
 // console.log("<%= raw (@recommend_infos) %>");
 
