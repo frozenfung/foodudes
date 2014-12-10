@@ -212,7 +212,6 @@ function addMarkers() {
     markers.push(marker);
   }
   cluster = new MarkerClusterer(map, markers);
-  cluster.setZoomOnclick(false);
 }
 
 // Set recommend data
