@@ -97,7 +97,6 @@ function initialize() {
       });
     }
     map.fitBounds(bounds);
-    map.setZoom(16);
   });
   // autocomplete
   // google.maps.event.addListener(autocomplete, 'place_changed', function() {
@@ -213,6 +212,7 @@ function addMarkers() {
     markers.push(marker);
   }
   cluster = new MarkerClusterer(map, markers);
+  cluster.setZoomOnclick(false);
 }
 
 // Set recommend data

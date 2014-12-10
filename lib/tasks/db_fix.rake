@@ -7,4 +7,10 @@ namespace :db_fix do
       r.save!
     end
   end
+
+  desc "fix precision of lag lng"
+  task :precision => :enviroment do
+    
+
+  end
 end

@@ -28,6 +28,8 @@ $(function(){
   //   }
   // });
 
+  $('#gmaps').css('height', $(window).height());
+
   $('.X').click(function(){
     $(this).parent().removeClass('food_info_fadeIn');
     if (marker_animation != null){
