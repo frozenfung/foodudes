@@ -106,6 +106,7 @@ function initialize() {
       });
     }
     map.fitBounds(bounds);
+    map.setZoom(15);
   });
   // autocomplete
   // google.maps.event.addListener(autocomplete, 'place_changed', function() {
