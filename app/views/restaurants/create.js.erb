@@ -1,1 +1,9 @@
-recommend_callback("<%= @info %>");
+<%
+  info = [@restaurant.name,
+        @restaurant.phone_number,
+        @restaurant.address,
+        @restaurant.lat,
+        @restaurant.lng,
+        current_user.image]
+%>
+recommend_callback(<%= raw(info.to_json) %>);

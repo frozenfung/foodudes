@@ -1,7 +1,8 @@
 class RestaurantsController < ApplicationController
   
   def index    
-    restaurant = Restaurant.where(:name => params[:name]).where(:lat => params[:lat]).where(:lng => params[:lng]).first
+    restaurant = Restaurant.find_by_name_and_location(params[:name], params[:lat], params[:lng])
+
     if restaurant
       @recommends = restaurant.recommends.order('created_at DESC')
       @friends_count = restaurant.recommends.count
@@ -15,28 +16,14 @@ class RestaurantsController < ApplicationController
   end
 
   def create
-    restaurant = Restaurant.find_or_create_from_form(restaurant_params)
-    Recommend.new_recommend(current_user, restaurant, recommend_params)
-    @info = []
-    @info[0] = restaurant_params['name']
-    @info[1] = restaurant_params['phone_number']
-    @info[2] = restaurant_params['address']
-    @info[3] = restaurant_params['lat']
-    @info[4] = restaurant_params['lng']
-    @info[5] = current_user.image
+    @restaurant = Restaurant.find_or_create_from_form(params[:restaurant][:name], params[:restaurant][:lat], params[:restaurant][:lng], 
+                                                       :phone_number => params[:phone_number], :address => params[:address] )
+
+    Recommend.create_recommend(current_user, @restaurant, :content => params[:recommend][:content])
+
     respond_to do |format|
       format.js
     end
-  end
-
-  protected
-
-  def restaurant_params
-    params.require(:restaurant).permit(:name, :address, :phone_number, :lng, :lat)
-  end
-
-  def recommend_params
-    params.require(:recommend).permit(:content)
   end
 
 end

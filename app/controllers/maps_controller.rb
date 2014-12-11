@@ -1,22 +1,8 @@
 class MapsController < ApplicationController 
   def index
     if current_user
-      # Find marker datas from DB 
-      @map_infos = []
-      friends = current_user.friends
-      friends.each do |friend|
-        friend.restaurants.each do |restaurant|
-          @map_infos << transform_dataStructure(restaurant, friend)
-        end
-      end
-      current_user.restaurants.each do |restaurant|
-        @map_infos << transform_dataStructure(restaurant, current_user)
-      end
-      # remove same restaurant
-      @map_infos = @map_infos.uniq{ |i| i['name']}
-
       # Pass varible to javascript
-      gon.map_infos = @map_infos
+      gon.map_infos = build_map_infos(current_user)
 
       # Initialize Recommends and Restaurants to form
       @recommend = current_user.recommends.new
@@ -28,7 +14,22 @@ class MapsController < ApplicationController
 
   protected
 
-  def transform_dataStructure(restaurant, friend)
+  def build_map_infos(user)
+    # Find marker datas from DB 
+    map_infos = []
+    user.friends.each do |friend|
+      friend.restaurants.each do |restaurant|
+        map_infos << transform_data_structure(restaurant, friend)
+      end
+    end
+    user.restaurants.each do |restaurant|
+      map_infos << transform_data_structure(restaurant, user)
+    end
+    # remove same restaurant
+    map_infos.uniq{ |i| i['name']}    
+  end
+
+  def transform_data_structure(restaurant, friend)
     map_info = {}
     map_info['name'] = restaurant.name
     map_info['phone_number'] = restaurant.phone_number

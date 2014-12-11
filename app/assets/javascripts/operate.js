@@ -44,6 +44,11 @@ $(function(){
       var string = $('#gmaps-place').attr('placeholder');
       $('#gmaps-place').attr('placeholder', find_food_string);
       find_food_string = string;
+      if ( show_result == null ){
+        show_result = map
+      }else{
+        show_result = null
+      }
     }
   });
 

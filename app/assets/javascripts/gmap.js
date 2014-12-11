@@ -2,6 +2,7 @@ var map;
 var mapOptions;
 var recommend_marker = null;
 var marker_animation = null;
+var show_result = null;
 // receive marker data from controller
 var map_infos = [];
 map_infos = gon.map_infos; 
@@ -83,7 +84,7 @@ function initialize() {
         cursor: fake_cursor,
         position: place.geometry.location
       });
-
+      marker.setMap(show_result);
       markers_candidate.push(marker);
       bounds.extend(place.geometry.location);
 
@@ -108,51 +109,6 @@ function initialize() {
     map.fitBounds(bounds);
     map.setZoom(15);
   });
-  // autocomplete
-  // google.maps.event.addListener(autocomplete, 'place_changed', function() {
-  //   marker.setVisible(false);
-  //   var place = autocomplete.getPlace();
-  //   if (!place.geometry) {
-  //     return;
-  //   }else{
-  //     // If the place has a geometry, then present it on a map.
-  //     if (place.geometry.viewport) {
-  //       map.fitBounds(place.geometry.viewport);
-  //     } else {
-  //       map.setCenter(place.geometry.location);
-  //       map.setZoom(18);  // Why 17? Because it looks good.
-  //     }
-  //     marker.setIcon(/** @type {google.maps.Icon} */({
-  //         url: 'http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png',
-  //         // size: new google.maps.Size(71, 71),
-  //         origin: new google.maps.Point(0, 0),
-  //         anchor: new google.maps.Point(17, 34),
-  //         scaledSize: new google.maps.Size(64, 64)
-  //     }));
-  //     marker.setPosition(place.geometry.location);
-  //     marker.setVisible(true);
-  //     // food_info setting
-  //     var name = place.name;
-  //     var address = '';
-  //     if (place.address_components) {
-  //       address = [
-  //         (place.address_components[3] && place.address_components[3].short_name || ''),
-  //         (place.address_components[2] && place.address_components[2].short_name || ''),
-  //         (place.address_components[1] && place.address_components[1].short_name || ''),
-  //         (place.address_components[0] && place.address_components[0].short_name || '')            
-  //       ].join('');
-  //     }
-  //     var phone_number = (place.formatted_phone_number) ? place.formatted_phone_number : '';
-  //     var lat = place.geometry.location.lat();
-  //     var lng = place.geometry.location.lng();
-  //     setInfo(name, phone_number, address);
-  //     setFormData(name, phone_number, address, lat, lng);
-  //     setFriendData(name, address);
-  //     if ( marker_recommend != null){
-  //       marker_recommend.setMap(map);
-  //     }
-  //   }
-  // });
 
   // Draw Markers from Database
   if(gon.map_infos){
@@ -264,12 +220,11 @@ var setFriendData = function(name, lat, lng){
 }
 
 // Ajax recommend data
-var recommend_callback = function(restaurant_params, count){
+var recommend_callback = function(restaurant_json){
   $('.form_content').html('');
   $('#recommend_form').modal('hide');
   $('.food_info').removeClass('food_info_fadeIn');
-  restaurant_params = restaurant_params.replace(/&quot;/g, '"');
-  restaurant_params = JSON.parse(restaurant_params);
+  restaurant_params = restaurant_json;
   marker_animation.setAnimation(null);
   recommend_marker.setIcon(restaurant_params[5]);
   recommend_marker.setAnimation(google.maps.Animation.DROP);

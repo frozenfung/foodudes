@@ -3,12 +3,15 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   scope :path => '/api/v1/', :module => "api_v1", :defaults => { :format => :json }, :as => 'v1' do
+    
     post 'auth/log_in' => 'users#login'
     delete 'auth/sign_out' => 'users#signout'
 
+    # REST: get 'maps' 
     get 'maps/index' => 'maps#index' 
-    post 'restaurants/recommend' => 'restaurants#recommend'    
-    get 'restaurants/find' => 'restaurants#find'
+
+    # REST: post 'recommends' => 'recommends#create'
+    post 'restaurants/recommend' => 'restaurants#recommend'     
   end
 
   root 'maps#index' 

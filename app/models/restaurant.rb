@@ -1,15 +1,24 @@
 class Restaurant < ActiveRecord::Base
+
   has_many :recommends
   has_many :users, :through => :recommends
 
-  def self.find_or_create_from_form(params)
-    restaurant = where(:lat => params[:lat]).where(:lng => params[:lng]).where(:name => params[:name]).first_or_initialize
-    restaurant.name = params[:name]
-    restaurant.phone_number = (params[:phone_number].length > 1) ? params[:phone_number] : '抱歉！目前沒有資料'
-    restaurant.address = (params[:address].length > 1) ? params[:address] : '抱歉！目前沒有資料'
-    restaurant.lng = params[:lng]
-    restaurant.lat = params[:lat]
+  def self.find_by_name_and_location(name, lat, lng)
+    name_and_location_scope(name, lat, lng).first
+  end
+
+  def self.find_or_create_from_form(name, lat, lng, options={})
+    restaurant = name_and_location_scope(name, lat, lng).first_or_initialize
+    restaurant.phone_number = options[:phone_number]
+    restaurant.address = options[:address]
     restaurant.save!
     restaurant
   end
+
+  protected
+
+  def self.name_and_location_scope(name, lat, lng)
+    where(:name => name).where(:lat => lat).where(:lng => lng)
+  end
+
 end
