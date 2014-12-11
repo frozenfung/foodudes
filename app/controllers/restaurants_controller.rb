@@ -17,8 +17,7 @@ class RestaurantsController < ApplicationController
 
   def create
     @restaurant = Restaurant.find_or_create_from_form(params[:restaurant][:name], params[:restaurant][:lat], params[:restaurant][:lng], 
-                                                       :phone_number => params[:phone_number], :address => params[:address] )
-
+                                                       :phone_number => params[:restaurant][:phone_number], :address => params[:restaurant][:address])
     Recommend.create_recommend(current_user, @restaurant, :content => params[:recommend][:content])
 
     respond_to do |format|
