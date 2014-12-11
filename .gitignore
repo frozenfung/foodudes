@@ -42,3 +42,5 @@ spec/controllers/api_v1/maps_controller_spec.rb
 spec/helpers/api_v1/maps_helper_spec.rb
 vendor/.DS_Store
 vendor/assets/.DS_Store
+spec/requests/api_v1/maps_controller_spec.rb
+spec/requests/api_v1/restaurants_controller_spec.rb

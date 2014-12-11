@@ -1,26 +1,21 @@
 class ApiV1::UsersController < ApiController
   def login
-    @graph = Koala::Facebook::API.new(params[:fb_token])
-    # @graph = Koala::Facebook::API.new(params[:fb_token])
-    auth_hash = @graph.get_object("me")
-    auth_hash_modified = {
-      'fb_uid' => auth_hash['id'],
-      'name' => "#{auth_hash['last_name']} #{auth_hash['first_name']}",
-      'email' => auth_hash['email'],
-      'image' => "http://graph.facebook.com/#{auth_hash['id']}/picture",
-      'fb_token' => params[:fb_token],
-      'mobile_id' => SecureRandom.uuid
-    }
-    @user = User.find_or_create_from_auth_hash(auth_hash_modified)
-    @user.initialize_relationship_from_fb
-    respond_to do |format|
-      format.html
-      format.json { render json: @user.as_json(only:[:id, :name, :email, :image, :mobile_id]) }
-    end
+    @user = User.find_or_create_from_mobile(params[:fb_token])
+    
+    if @user
+      @user.initialize_relationship_from_fb
+      render json: @user.as_json(only:[:id, :name, :email, :image, :mobile_id])
+    else
+      render json: { :message => "you facebook token is wrong"}, :status => 401
+    end      
   end
 
   def signout
-    User.modify_mobile_id(params)
-    render :text => 'OK'
+    @user = User.modify_mobile_id(params)
+    if @user
+      render json: @user.as_json(only:[:name])
+    else
+      render json: { :message => "sign out failed"}, :status => 401
+    end
   end
 end

@@ -34,12 +34,32 @@ class User < ActiveRecord::Base
     user
   end
 
+  def self.find_or_create_from_mobile(fb_token)
+    graph = Koala::Facebook::API.new(fb_token)
+    auth_hash = graph.get_object("me")
+    auth_hash_modified = {
+      'fb_uid' => auth_hash['id'],
+      'name' => "#{auth_hash['last_name']} #{auth_hash['first_name']}",
+      'email' => auth_hash['email'],
+      'image' => "http://graph.facebook.com/#{auth_hash['id']}/picture",
+      'fb_token' => fb_token,
+      'mobile_id' => SecureRandom.uuid
+    }
+
+    find_or_create_from_auth_hash(auth_hash_modified)
+
+    rescue Koala::Facebook::AuthenticationError
+      return nil
+  end
+
   def self.modify_mobile_id(params)
     user = where(:mobile_id => params[:mobile_id]).first
     if user
       user.mobile_id = SecureRandom.uuid
       user.save!
       user
+    else
+      nil
     end
   end
 end
