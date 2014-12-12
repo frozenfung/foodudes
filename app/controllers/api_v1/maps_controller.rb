@@ -5,7 +5,7 @@ class ApiV1::MapsController < ApiController
       map_infos = []
       user_infos = []
       friends = mobile_user.friends
-      friends << mobile_user  
+      friends << mobile_user
       friends.each do |friend|
         friend.restaurants.each do |restaurant|
           # Save map markers data
@@ -29,13 +29,15 @@ class ApiV1::MapsController < ApiController
           map_infos << map_info
         end
         # Save users data
-        user_info = {}
-        user_info['id'] = friend.id
-        user_info['name'] = friend.name
-        user_info['email'] = friend.email
-        user_info['image'] = friend.image
-        user_info['recommend_count'] = friend.restaurants.count
-        user_infos << user_info
+        unless friend == mobile_user
+          user_info = {}
+          user_info['id'] = friend.id
+          user_info['name'] = friend.name
+          user_info['email'] = friend.email
+          user_info['image'] = friend.image
+          user_info['recommend_count'] = friend.restaurants.count
+          user_infos << user_info
+        end
       end
       recommend_infos = {}
       recommend_infos['restaurants'] = map_infos
