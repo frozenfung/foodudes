@@ -4,7 +4,7 @@ class ApiV1::UsersController < ApiController
     
     if @user
       @user.initialize_relationship_from_fb
-      render json: @user.as_json(only:[:id, :name, :email, :image, :mobile_id])
+      render json: { :user => @user.as_json(:only => [:id, :name, :email, :image, :mobile_id]), :recommend_count => @user.restaurants.count }
     else
       render json: { :message => "you facebook token is wrong"}, :status => 401
     end      
