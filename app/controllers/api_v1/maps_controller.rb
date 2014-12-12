@@ -5,6 +5,7 @@ class ApiV1::MapsController < ApiController
       map_infos = []
       user_infos = []
       friends = mobile_user.friends
+      friends << mobile_user  
       friends.each do |friend|
         friend.restaurants.each do |restaurant|
           # Save map markers data
