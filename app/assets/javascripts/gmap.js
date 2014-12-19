@@ -220,11 +220,10 @@ var setFriendData = function(name, lat, lng){
 }
 
 // Ajax recommend data
-var recommend_callback = function(restaurant_json){
+var recommend_callback = function(restaurant_params){
   $('.form_content').val('');
   $('#recommend_form').modal('hide');
   $('.food_info').removeClass('food_info_fadeIn');
-  restaurant_params = restaurant_json;
   marker_animation.setAnimation(null);
   recommend_marker.setIcon(restaurant_params[5]);
   recommend_marker.setAnimation(google.maps.Animation.DROP);
