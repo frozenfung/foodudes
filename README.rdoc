@@ -1,27 +1,22 @@
-== README
+Foodudes project by frozenfung
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+==What is foodudes?
 
-Things you may want to cover:
+It's a restaurant recommended service. What is unique is that all recommendations are from your facebook friends. 
 
-* Ruby version
+==How it works?
 
-* System dependencies
+First of all, foodudes will login via facebook to get your identification. 
+Then, foodudes marks all restaurants recommended by your friends in our google map.
 
-* Configuration
+==How to recommend a restaurant to my friends?
 
-* Database creation
+1. Search your favorite restaurant in search bar.
+2. Click on the mark show on our map.
+3. Recommend it with your comment.
 
-* Database initialization
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Enjoy it!
 
 
 Please feel free to use a different markup language if you do not plan to run
