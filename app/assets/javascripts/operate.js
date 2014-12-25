@@ -60,8 +60,8 @@ $(function(){
     for(var j = 0; j < markers_candidate.length; j++){
       markers_candidate[j].setMap(null);
     }
-
     $('#gmaps-place').val('');
+    $('.food_info').removeClass('food_info_fadeIn');
   });
 
   $('.find_food h2 .recommend_restaurant').click(function(){
@@ -73,5 +73,6 @@ $(function(){
     }
     cluster.clearMarkers();
     $('#gmaps-place').val('');
+    $('.food_info').removeClass('food_info_fadeIn');
   });
 })

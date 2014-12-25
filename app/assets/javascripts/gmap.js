@@ -43,10 +43,11 @@ function initialize() {
     if (places.length == 0) {
       return;
     }
-    for (var i = 0, marker; marker = markers_candidate[i]; i++) {
+    markers_candidate.forEach(function(marker){
       marker.setMap(null);
-    }
+    });
     markers_candidate = [];
+
     var bounds = new google.maps.LatLngBounds();
     places.forEach(function(place){
       var image = {
@@ -73,7 +74,6 @@ function initialize() {
       infos.push(place.geometry.location.lat());
       infos.push(place.geometry.location.lng());
       var fake_cursor = infos.join('~_~');
-      console.log(fake_cursor);
 
       // Create a marker for each place
       var marker = new google.maps.Marker({
@@ -150,8 +150,6 @@ var set_marker_click_event = function(marker){
   });  
 }
 
-
-
 // Set datas
 
 var setData = function(info_array){
@@ -161,11 +159,9 @@ var setData = function(info_array){
 }
 
 var setInfo = function(info_array){
-  $('.food_info_content').html(
-    '<li class="name_info">名稱 : ' + info_array[0] + '</li>' +
-    '<li class="phone_number_info">電話 : ' + info_array[1] + '</li>' +
-    '<li class="address_info">地址 : ' + info_array[2] + '</li>'
-  );
+  $('.name_info span:last-child').text(info_array[0]);
+  $('.phone_number_info span:last-child').text(info_array[1]); 
+  $('.address_info span:last-child').text(info_array[2]); 
   $('.food_info').addClass('food_info_fadeIn');
 }
 
@@ -180,8 +176,6 @@ var setForm = function(info_array){
 var setFriend = function(info_array){
   li_index = 0;
   $('.friend_info_content').css("left", 0);
-  $('.food_info .left_arrow').css('display', 'none');
-  $('.food_info .right_arrow').css('display', 'none');
   $.ajax({
     url: '/restaurants',
     type: 'GET',
@@ -189,9 +183,10 @@ var setFriend = function(info_array){
     contentType: 'script'
   }).done(function(){
     $('.friend_info_content>li').css('width', $(window).width()*0.31);
-    if ($('.friend_info_content').html() == '') {
-      $('.friend_info_content').html("<li>你真幸運！這家店還沒有被朋友推薦過！<br>馬上成為第一個推薦這家餐廳的人！</li>");
-      $('.friends_count').html('0');  
+    if ($('.friend_info_content>li:first').text().length < 1) {
+      $('.friend_info_content').append("<br><br><li></li>");
+      $('.friend_info_content>li:first').text("你真幸運:)這家店還沒有被朋友推薦過！馬上成為第一個推薦這家餐廳的人！");
+      $('.friends_count').text('0');  
     }
   });
 }
