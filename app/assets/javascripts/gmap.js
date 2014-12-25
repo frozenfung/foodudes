@@ -48,7 +48,7 @@ function initialize() {
     }
     markers_candidate = [];
     var bounds = new google.maps.LatLngBounds();
-    for (var i = 0, place; place = places[i]; i++) {
+    places.forEach(function(place){
       var image = {
         url: 'http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png',
         size: new google.maps.Size(71, 71),
@@ -56,9 +56,9 @@ function initialize() {
         anchor: new google.maps.Point(17, 34),
         scaledSize: new google.maps.Size(64, 64)
       };
-
       // Set Info of places
-      var name = place.name;
+      var infos = [];
+      infos.push(place.name);
       var address = '';
       if (place.address_components) {
         address = [
@@ -68,16 +68,14 @@ function initialize() {
           (place.address_components[0] && place.address_components[0].short_name || '')            
         ].join('');
       }
-      var phone_number = (place.formatted_phone_number) ? place.formatted_phone_number : '';       
-      var lat = place.geometry.location.lat();
-      var lng = place.geometry.location.lng();
-      var fake_cursor = name + '~_~' + 
-                        phone_number + '~_~' +
-                        address + '~_~' +
-                        lat + '~_~' +
-                        lng;
+      infos.push(address);
+      infos.push(place.formatted_phone_number ? place.formatted_phone_number : '');       
+      infos.push(place.geometry.location.lat());
+      infos.push(place.geometry.location.lng());
+      var fake_cursor = infos.join('~_~');
+      console.log(fake_cursor);
 
-      // Create a marker for each place.
+      // Create a marker for each place
       var marker = new google.maps.Marker({
         map: map,
         icon: image,
@@ -87,25 +85,8 @@ function initialize() {
       marker.setMap(show_result);
       markers_candidate.push(marker);
       bounds.extend(place.geometry.location);
-
-      google.maps.event.addListener(marker, 'click', function() {
-        if (this.getAnimation() != null) {
-          this.setAnimation(null);    
-        } else {
-          if (marker_animation != null){
-            marker_animation.setAnimation(null);
-          }
-          this.setAnimation(google.maps.Animation.BOUNCE);
-          marker_animation = this;
-        }        
-        recommend_marker = this;
-        var info = this.getCursor();
-        var info_array = info.split('~_~');
-        setInfo(info_array[0], info_array[1], info_array[2]);
-        setFormData(info_array[0], info_array[1], info_array[2], info_array[3], info_array[4]);
-        setFriendData(info_array[0], info_array[3], info_array[4]);
-      });
-    }
+      set_marker_click_event(marker);
+    });
     map.fitBounds(bounds);
     map.setZoom(15);
   });
@@ -133,74 +114,70 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 // Add Markers on Map
 function addMarkers() {
-  for(var i = 0; i < map_infos.length; i++){
-    var fake_cursor = 
-    map_infos[i]['name'] + '~_~' +
-    map_infos[i]['phone_number'] + '~_~' +
-    map_infos[i]['address'] + '~_~' +
-    map_infos[i]['marker_lat'] + '~_~' +
-    map_infos[i]['marker_lng'];  
+  map_infos.forEach(function(infos){
+    var fake_cursor = infos.join('~_~');
     var marker = new google.maps.Marker({
       position: new google.maps.LatLng(
-          map_infos[i]['marker_lat'], 
-          map_infos[i]['marker_lng']
+          parseFloat(infos[3]), 
+          parseFloat(infos[4])
         ),
       cursor: fake_cursor,
-      icon: map_infos[i]['friend_icon'],
+      icon: infos[5],
       map: map
     });
-    // var marker = new RichMarker({
-    //   position: new google.maps.LatLng(
-    //       map_infos[i]["marker_lat"], 
-    //       map_infos[i]["marker_lng"]
-    //     ),
-    //   content: '<div class="marker_background"><img src="'+map_infos[i]["friend_icon"]+'" class="friend_icon" /></div>',
-    //   title: titleList,
-    //   map: map
-    // })
-    // .setShadow('5px -3px 3px #555');
-    google.maps.event.addListener(marker, 'click', function() {
-      if (this.getAnimation() != null) {
-        this.setAnimation(null);    
-      } else {
-        if (marker_animation != null){
-          marker_animation.setAnimation(null);
-        }
-        this.setAnimation(google.maps.Animation.BOUNCE);
-        marker_animation = this;
-      }
-      recommend_marker = this;
-      var info = this.getCursor();
-      var info_array = info.split('~_~');
-      setInfo(info_array[0], info_array[1], info_array[2]);
-      setFormData(info_array[0], info_array[1], info_array[2], info_array[3], info_array[4]);
-      setFriendData(info_array[0], info_array[3], info_array[4]);
-    });
+    set_marker_click_event(marker);
     markers.push(marker);
-  }
+  });
   cluster = new MarkerClusterer(map, markers);
 }
 
-// Set recommend data
 
-var setInfo = function(name, phone_number, address){
+var set_marker_click_event = function(marker){
+  google.maps.event.addListener(marker, 'click', function() {
+    if (this.getAnimation() != null) {
+      this.setAnimation(null);    
+    } else {
+      if (marker_animation != null){
+        marker_animation.setAnimation(null);
+      }
+      this.setAnimation(google.maps.Animation.BOUNCE);
+      marker_animation = this;
+    }
+    recommend_marker = this;
+    var info = this.getCursor();
+    var info_array = info.split('~_~');
+    setData(info_array);
+  });  
+}
+
+
+
+// Set datas
+
+var setData = function(info_array){
+  setInfo(info_array);
+  setForm(info_array);
+  setFriend(info_array);
+}
+
+var setInfo = function(info_array){
   $('.food_info_content').html(
-    '<li class="name_info">名稱 : ' + name + '</li>' +
-    '<li class="phone_number_info">電話 : ' + phone_number + '</li>' +
-    '<li class="address_info">地址 : ' + address + '</li>'
+    '<li class="name_info">名稱 : ' + info_array[0] + '</li>' +
+    '<li class="phone_number_info">電話 : ' + info_array[1] + '</li>' +
+    '<li class="address_info">地址 : ' + info_array[2] + '</li>'
   );
   $('.food_info').addClass('food_info_fadeIn');
 }
 
-var setFormData = function(name, phone_number, address, lat, lng){
-  $('.form_name').val(name);
-  $('.form_phone_number').val(phone_number);
-  $('.form_address').val(address);
-  $('.form_lat').val(lat);
-  $('.form_lng').val(lng);
+var setForm = function(info_array){
+  $('.form_name').val(info_array[0]);
+  $('.form_phone_number').val(info_array[1]);
+  $('.form_address').val(info_array[2]);
+  $('.form_lat').val(info_array[3]);
+  $('.form_lng').val(info_array[4]);
 }
 
-var setFriendData = function(name, lat, lng){
+var setFriend = function(info_array){
   li_index = 0;
   $('.friend_info_content').css("left", 0);
   $('.food_info .left_arrow').css('display', 'none');
@@ -208,7 +185,7 @@ var setFriendData = function(name, lat, lng){
   $.ajax({
     url: '/restaurants',
     type: 'GET',
-    data: {name: name, lat: lat, lng: lng},
+    data: {name: info_array[0], lat: info_array[3], lng: info_array[4]},
     contentType: 'script'
   }).done(function(){
     $('.friend_info_content>li').css('width', $(window).width()*0.31);

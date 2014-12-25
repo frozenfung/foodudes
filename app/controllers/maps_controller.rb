@@ -26,17 +26,17 @@ class MapsController < ApplicationController
       map_infos << transform_data_structure(restaurant, user)
     end
     # remove same restaurant
-    map_infos.uniq{ |i| i['name']}    
+    map_infos.uniq{ |i| i[0]}    
   end
 
   def transform_data_structure(restaurant, friend)
-    map_info = {}
-    map_info['name'] = restaurant.name
-    map_info['phone_number'] = restaurant.phone_number
-    map_info['address'] = restaurant.address
-    map_info['marker_lng'] = restaurant.lng
-    map_info['marker_lat'] = restaurant.lat
-    map_info['friend_icon'] = friend.image
+    map_info = []
+    map_info << restaurant.name
+    map_info << restaurant.phone_number
+    map_info << restaurant.address
+    map_info << restaurant.lat
+    map_info << restaurant.lng
+    map_info << friend.image
     map_info
   end  
 end
