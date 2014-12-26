@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         <% if current_user %>
-        <%= form_for @recommend, :remote => true, :url => restaurants_path do |rc| %>
+        <%= form_for @recommend, :remote => true, :url => restaurants_path, :html => { :multipart => true } do |rc| %>
             <%= fields_for @restaurant do |r| %>
               <%= r.text_field :name, :class => 'form_hide form_name' %>
               <%= r.text_field :phone_number, :class => 'form_hide form_phone_number' %>
@@ -15,6 +15,8 @@
               <%= r.text_field :lat, :class => 'form_hide form_lat' %>
               <%= r.text_field :lng, :class => 'form_hide form_lng' %>
             <% end %>
+            <%= rc.label '上傳圖片' %><br>
+            <%= rc.file_field :cuisine %><br>
             <%= rc.label '推薦原因' %><br>
             <%= rc.text_area :content, :class => 'form_content form-control', :size => '90x5'%>        
       </div>

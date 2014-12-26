@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141208090222) do
+ActiveRecord::Schema.define(version: 20141226050807) do
 
   create_table "friendships", force: true do |t|
     t.integer  "user_id"
@@ -26,6 +26,10 @@ ActiveRecord::Schema.define(version: 20141208090222) do
     t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "cuisine_file_name"
+    t.string   "cuisine_content_type"
+    t.integer  "cuisine_file_size"
+    t.datetime "cuisine_updated_at"
   end
 
   create_table "restaurants", force: true do |t|
@@ -43,7 +47,7 @@ ActiveRecord::Schema.define(version: 20141208090222) do
     t.string   "email"
     t.string   "image"
     t.string   "fb_uid"
-    t.string   "fb_token"
+    t.string   "fb_token",      limit: 400
     t.datetime "fb_expires_at"
     t.datetime "created_at"
     t.datetime "updated_at"
