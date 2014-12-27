@@ -1,6 +1,6 @@
 class RestaurantsController < ApplicationController
   
-  skip_before_filter :verify_authenticity_token, :only => [:create]
+  # skip_before_filter :verify_authenticity_token, :only => [:create]
 
   def index    
     restaurant = Restaurant.find_by_name_and_location(params[:name], params[:lat], params[:lng])

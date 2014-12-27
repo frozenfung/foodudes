@@ -5,6 +5,9 @@
       <%= recommend.user.name %>推薦
     </div>
   </div>
+  <br>
+  <%= image_tag(recommend.cuisine.url(:medium))%>
+  <br>
   <div>
     <%= simple_format(recommend.content) %>
   </div>

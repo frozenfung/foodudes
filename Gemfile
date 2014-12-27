@@ -22,6 +22,7 @@ gem 'capistrano-rails', :group => :development
 gem 'capistrano-passenger', :group => :development
 
 gem "paperclip", "~> 4.2"
+gem 'remotipart', '~> 1.2'
 gem "jquery-ui-rails"
 gem "gon"
 gem "rspec", "~> 2.0"
