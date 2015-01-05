@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
+  # grape API
+  mount Foodudes::API => '/'
+
   scope :path => '/api/v1/', :module => "api_v1", :defaults => { :format => :json }, :as => 'v1' do
     
     post 'auth/log_in' => 'users#login'
