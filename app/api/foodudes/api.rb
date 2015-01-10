@@ -1,4 +1,5 @@
 module Foodudes
+
   class API < Grape::API
     version 'v1', using: :path, vendor: 'foodudes'
     format :json
@@ -62,11 +63,13 @@ module Foodudes
               'user' => []
             }
             restaurant.users.each do |user|
+              recommend = Recommend.where(:user_id => user.id).where(:restaurant_id => restaurant.id).first
               user_info = {
                 'id' => user.id,
                 'name' => user.name,
                 'image' => user.image,
-                'content' => Recommend.where(:user_id => user.id).where(:restaurant_id => restaurant.id).first.content,
+                'content' => recommend.content,
+                'cuisine' => recommend.cuisine.url(:medium)
               }
               map_info['user'] << user_info
             end
@@ -92,14 +95,6 @@ module Foodudes
 
     resource :restaurants do
       desc "recommend restaurant"
-      params do
-        requires :name, type: String
-        requires :lat, type: Float
-        requires :lng, type: Float
-        requires :phone_number, type: String
-        requires :address, type: String
-        requires :mobile_id, type: String
-      end
       post :recommend do
         authenticate!
         restaurant = Restaurant.find_or_create_from_form(params[:name], params[:lat], params[:lng], 
@@ -108,6 +103,21 @@ module Foodudes
         { :status => 'Recommend Success!' }
       end
     end
+  end
+end
+
+module Paperclip
+  class HashieMashUploadedFileAdapter < AbstractAdapter
+    attr_accessor :original_filename # use this accessor if you have paperclip version < 3.3.0
+
+    def initialize(target)
+      @tempfile, @content_type, @size = target.tempfile, target.type, target.tempfile.size
+      self.original_filename = target.filename
+    end
 
   end
+end
+
+Paperclip.io_adapters.register Paperclip::HashieMashUploadedFileAdapter do |target|
+  target.is_a? Hashie::Mash
 end
