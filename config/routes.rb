@@ -27,11 +27,7 @@ Rails.application.routes.draw do
   get '/auth/failure', to: 'sessions#failure'
   delete '/auth/sign_out', to: 'sessions#destroy'
 
-  get '/users', to: 'users#index'
-
-
   resources :restaurants
-  
 
   # grape API
   mount Foodudes::API => '/'
