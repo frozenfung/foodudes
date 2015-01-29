@@ -1,5 +1,4 @@
 module Foodudes
-
   class API < Grape::API
     version 'v1', using: :path, vendor: 'foodudes'
     format :json
@@ -101,6 +100,15 @@ module Foodudes
                       :phone_number => params[:phone_number], :address => params[:address])
         Recommend.create_recommend(mobile_user, restaurant, params)
         { :status => 'Recommend Success!' }
+      end
+
+      get :random do
+        restaurant = Restaurant.order("RAND()").first
+        {
+          name: restaurant.name,
+          address: restaurant.address,
+          phone_number: restaurant.phone_number
+        }
       end
     end
   end
