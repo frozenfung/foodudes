@@ -20,6 +20,8 @@ end
 
 gem 'capistrano-rails', :group => :development
 gem 'capistrano-passenger', :group => :development
+gem 'dotenv'
+
 
 gem 'grape'
 gem "paperclip", "~> 4.2"
@@ -56,4 +58,3 @@ gem 'spring',        group: :development
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
-
