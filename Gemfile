@@ -22,7 +22,7 @@ end
 gem 'capistrano-rails', :group => :development
 gem 'capistrano-passenger', :group => :development
 gem 'dotenv'
-
+gem 'pg'
 
 gem 'grape'
 gem "paperclip", "~> 4.2"
