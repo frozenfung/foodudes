@@ -1,18 +1,15 @@
 development:
-  adapter: mysql2
-  encoding: utf8
-  database: foodudes
+  adapter: postgresql
   host: localhost
-  username: root
-  password:
-
+  username: user
+  database: app-dev
 test:
-  adapter: mysql2
-  encoding: utf8
-  database: foodudes_test
+  adapter: postgresql
   host: localhost
-  username: root
-  password:
-
+  username: user
+  database: app-dev
 production:
-
+  adapter: postgresql
+  host: localhost
+  username: user
+  database: app-dev
