@@ -6,6 +6,9 @@
 
 # Ignore setting
 /config/facebook.yml
+credentials.csv
+.env
+
 
 # Ignore bundler config.
 /.bundle
