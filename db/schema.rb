@@ -11,7 +11,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141226050807) do
+ActiveRecord::Schema.define(version: 20150408113637) do
+
+  create_table "active_admin_comments", force: true do |t|
+    t.string   "namespace"
+    t.text     "body"
+    t.string   "resource_id",   null: false
+    t.string   "resource_type", null: false
+    t.integer  "author_id"
+    t.string   "author_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
+  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
+  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
+
+  create_table "admin_users", force: true do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
+  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "friendships", force: true do |t|
     t.integer  "user_id"
@@ -34,17 +67,16 @@ ActiveRecord::Schema.define(version: 20141226050807) do
 
   create_table "restaurants", force: true do |t|
     t.string   "name"
-    t.string   "address",                                default: "抱歉！目前沒有資料"
+    t.string   "address"
     t.decimal  "lng",          precision: 25, scale: 20
     t.decimal  "lat",          precision: 25, scale: 20
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "phone_number",                           default: "抱歉！目前沒有資料"
+    t.string   "phone_number"
   end
 
   create_table "users", force: true do |t|
     t.string   "name"
-    t.string   "email"
     t.string   "image"
     t.string   "fb_uid"
     t.string   "fb_token",      limit: 400
@@ -52,6 +84,7 @@ ActiveRecord::Schema.define(version: 20141226050807) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "mobile_id"
+    t.string   "email",                     null: false
   end
 
   add_index "users", ["mobile_id"], name: "index_users_on_mobile_id", using: :btree

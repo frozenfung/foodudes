@@ -1,8 +1,10 @@
 development:
-  adapter: postgresql
+  adapter: mysql2
+  encoding: utf8
+  database: foodudes
   host: localhost
-  username: user
-  database: app-dev
+  username: root
+  password:
 test:
   adapter: postgresql
   host: localhost

@@ -3,6 +3,14 @@ class Restaurant < ActiveRecord::Base
   has_many :recommends
   has_many :users, :through => :recommends
 
+  def self.random_pick
+    if Rails.env.development?
+      order("RAND()").first
+    else
+      order("random()").first
+    end
+  end
+
   def self.find_by_name_and_location(name, lat, lng)
     name_and_location_scope(name, lat, lng).first
   end
