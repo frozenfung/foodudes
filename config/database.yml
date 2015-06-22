@@ -5,6 +5,8 @@ development:
   host: localhost
   username: root
   password:
+  port: 13306
+  socket: /opt/boxen/data/socket
 test:
   adapter: postgresql
   host: localhost
