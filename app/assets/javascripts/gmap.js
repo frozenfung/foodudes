@@ -5,7 +5,7 @@ var marker_animation = null;
 var show_result = null;
 // receive marker data from controller
 var map_infos = [];
-map_infos = gon.map_infos; 
+map_infos = gon.map_infos;
 
 // variables from addMarkers
 var markers = [];
@@ -25,7 +25,7 @@ function initialize() {
   var input = document.getElementById('gmaps-place');
   //var autocomplete = new google.maps.places.Autocomplete(input);
   var searchBox = new google.maps.places.SearchBox(input);
-  
+
   //autocomplete.bindTo('bounds', map);
   //var infowindow = new google.maps.InfoWindow();
   var marker = new google.maps.Marker({
@@ -33,11 +33,11 @@ function initialize() {
     anchorPoint: new google.maps.Point(0, -29)
   });
 
-  google.maps.event.addListener(marker, 'click', function() {   
+  google.maps.event.addListener(marker, 'click', function() {
     $('.food_info').addClass('food_info_fadeIn');
   });
 
-  // search box 
+  // search box
   google.maps.event.addListener(searchBox, 'places_changed', function() {
     var places = searchBox.getPlaces();
     if (places.length == 0) {
@@ -66,11 +66,11 @@ function initialize() {
           (place.address_components[3] && place.address_components[3].short_name || ''),
           (place.address_components[2] && place.address_components[2].short_name || ''),
           (place.address_components[1] && place.address_components[1].short_name || ''),
-          (place.address_components[0] && place.address_components[0].short_name || '')            
+          (place.address_components[0] && place.address_components[0].short_name || '')
         ].join('');
       }
       infos.push(address);
-      infos.push(place.formatted_phone_number ? place.formatted_phone_number : '');       
+      infos.push(place.formatted_phone_number ? place.formatted_phone_number : '');
       infos.push(place.geometry.location.lat());
       infos.push(place.geometry.location.lng());
       var fake_cursor = infos.join('~_~');
@@ -102,11 +102,11 @@ function initialize() {
     if(marker_animation != null){
       marker_animation.setAnimation(null);
     }
-  }); 
+  });
   google.maps.event.addListener(map, 'bounds_changed', function() {
     var bounds = map.getBounds();
     searchBox.setBounds(bounds);
-  }); 
+  });
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -118,7 +118,7 @@ function addMarkers() {
     var fake_cursor = infos.join('~_~');
     var marker = new google.maps.Marker({
       position: new google.maps.LatLng(
-          parseFloat(infos[3]), 
+          parseFloat(infos[3]),
           parseFloat(infos[4])
         ),
       cursor: fake_cursor,
@@ -135,7 +135,7 @@ function addMarkers() {
 var set_marker_click_event = function(marker){
   google.maps.event.addListener(marker, 'click', function() {
     if (this.getAnimation() != null) {
-      this.setAnimation(null);    
+      this.setAnimation(null);
     } else {
       if (marker_animation != null){
         marker_animation.setAnimation(null);
@@ -147,7 +147,7 @@ var set_marker_click_event = function(marker){
     var info = this.getCursor();
     var info_array = info.split('~_~');
     setData(info_array);
-  });  
+  });
 }
 
 // Set datas
@@ -160,8 +160,8 @@ var setData = function(info_array){
 
 var setInfo = function(info_array){
   $('.name_info span:last-child').text(info_array[0]);
-  $('.phone_number_info span:last-child').text(info_array[1]); 
-  $('.address_info span:last-child').text(info_array[2]); 
+  $('.phone_number_info span:last-child').text(info_array[1]);
+  $('.address_info span:last-child').text(info_array[2]);
   $('.food_info').addClass('food_info_fadeIn');
 }
 
@@ -186,7 +186,7 @@ var setFriend = function(info_array){
     if ($('.friend_info_content>li:first').text().length < 1) {
       $('.friend_info_content').append("<br><br><li></li>");
       $('.friend_info_content>li:first').text("你真幸運:)這家店還沒有被朋友推薦過！馬上成為第一個推薦這家餐廳的人！");
-      $('.friends_count').text('0');  
+      $('.friends_count').text('0');
     }
   });
 }
@@ -199,15 +199,6 @@ var recommend_callback = function(restaurant_params){
   marker_animation.setAnimation(null);
   recommend_marker.setIcon(restaurant_params[5]);
   recommend_marker.setAnimation(google.maps.Animation.DROP);
-  markers.push(recommend_marker); 
+  markers.push(recommend_marker);
   cluster.addMarker(recommend_marker);
 }
-
-
-
-
-
-
-
-
-

@@ -1,8 +1,7 @@
 class RestaurantsController < ApplicationController
-  
   # skip_before_filter :verify_authenticity_token, :only => [:create]
 
-  def index    
+  def index
     restaurant = Restaurant.find_by_name_and_location(params[:name], params[:lat], params[:lng])
 
     if restaurant
@@ -18,7 +17,7 @@ class RestaurantsController < ApplicationController
   end
 
   def create
-    @restaurant = Restaurant.find_or_create_from_form(params[:restaurant][:name], params[:restaurant][:lat], params[:restaurant][:lng], 
+    @restaurant = Restaurant.find_or_create_from_form(params[:restaurant][:name], params[:restaurant][:lat], params[:restaurant][:lng],
                                                        :phone_number => params[:restaurant][:phone_number], :address => params[:restaurant][:address])
     Recommend.create_recommend(current_user, @restaurant, :cuisine => params[:recommend][:cuisine], :content => params[:recommend][:content])
     respond_to do |format|

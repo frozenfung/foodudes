@@ -1,4 +1,4 @@
-class MapsController < ApplicationController 
+class MapsController < ApplicationController
   def index
     if current_user
       # Pass varible to javascript
@@ -15,7 +15,7 @@ class MapsController < ApplicationController
   protected
 
   def build_map_infos(user)
-    # Find marker datas from DB 
+    # Find marker datas from DB
     map_infos = []
     user.friends.each do |friend|
       friend.restaurants.each do |restaurant|
@@ -26,7 +26,7 @@ class MapsController < ApplicationController
       map_infos << transform_data_structure(restaurant, user)
     end
     # remove same restaurant
-    map_infos.uniq{ |i| i[0]}    
+    map_infos.uniq{ |i| i[0]}
   end
 
   def transform_data_structure(restaurant, friend)
@@ -38,5 +38,5 @@ class MapsController < ApplicationController
     map_info << restaurant.lng
     map_info << friend.image
     map_info
-  end  
+  end
 end
