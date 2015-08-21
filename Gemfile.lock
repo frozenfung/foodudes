@@ -41,18 +41,6 @@ GEM
     bootstrap-sass (3.3.1.0)
       sass (~> 3.2)
     builder (3.2.2)
-    capistrano (3.2.1)
-      i18n
-      rake (>= 10.0.0)
-      sshkit (~> 1.3)
-    capistrano-bundler (1.1.3)
-      capistrano (~> 3.1)
-      sshkit (~> 1.2)
-    capistrano-passenger (0.0.1)
-      capistrano (~> 3.0)
-    capistrano-rails (1.1.2)
-      capistrano (~> 3.1)
-      capistrano-bundler (~> 1.1)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.4)
@@ -67,7 +55,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.8.0)
-    colorize (0.7.3)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
@@ -75,6 +62,14 @@ GEM
     equalizer (0.0.9)
     erubis (2.7.0)
     execjs (2.2.2)
+    factory_factory_girl (0.1.6)
+      factory_girl_rails (>= 4.5.0)
+      railties (>= 3.0.0)
+    factory_girl (4.5.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.5.0)
+      factory_girl (~> 4.5.0)
+      railties (>= 3.0.0)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
     fb_graph (2.7.17)
@@ -125,9 +120,6 @@ GEM
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     mysql2 (0.3.18)
-    net-scp (1.2.1)
-      net-ssh (>= 2.6.5)
-    net-ssh (2.9.1)
     oauth2 (1.0.0)
       faraday (>= 0.8, < 0.10)
       jwt (~> 1.0)
@@ -179,8 +171,6 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.3.2)
-    rdoc (4.1.2)
-      json (~> 1.4)
     remotipart (1.2.1)
     request_store (1.1.0)
     rspec (2.99.0)
@@ -208,9 +198,6 @@ GEM
       sass (~> 3.2.2)
       sprockets (~> 2.8, < 2.12)
       sprockets-rails (~> 2.0)
-    sdoc (0.4.1)
-      json (~> 1.7, >= 1.7.7)
-      rdoc (~> 4.0)
     spring (1.1.3)
     sprockets (2.11.3)
       hike (~> 1.2)
@@ -221,10 +208,6 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
-    sshkit (1.5.1)
-      colorize
-      net-scp (>= 1.1.2)
-      net-ssh (>= 2.8.0)
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
@@ -247,10 +230,10 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   bootstrap-sass (~> 3.3.1)
-  capistrano-passenger
-  capistrano-rails
   coffee-rails (~> 4.0.0)
   dotenv
+  factory_factory_girl
+  factory_girl_rails
   fb_graph
   gmaps4rails
   gon
@@ -268,7 +251,6 @@ DEPENDENCIES
   rspec (~> 2.0)
   rspec-rails (~> 2.0)
   sass-rails (~> 4.0.3)
-  sdoc (~> 0.4.0)
   spring
   turbolinks
   uglifier (>= 1.3.0)
