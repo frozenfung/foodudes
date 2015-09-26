@@ -9,11 +9,11 @@ class User < ActiveRecord::Base
   def initialize_relationship_from_fb
     graph = Koala::Facebook::API.new(self.fb_token)
     friend_uids = graph.get_connections("me", "friends").map { |x| x['id'] }
-    self.class.transaction do 
+    self.class.transaction do
       self.friendships.destroy_all
       friend_uids.each do |friend_uid|
         friend = User.where(:fb_uid => friend_uid).first
-        if friend 
+        if friend
           friendship = self.friendships.new
           friendship.friend = friend
           friendship.save!
@@ -63,12 +63,3 @@ class User < ActiveRecord::Base
     end
   end
 end
-
-
-
-
-
-
-
-
-

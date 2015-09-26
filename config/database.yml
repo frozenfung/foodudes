@@ -1,17 +1,21 @@
 development:
   adapter: mysql2
   encoding: utf8
-  database: foodudes
+  database: foodudes_development
   host: localhost
   username: root
   password:
   port: 13306
   socket: /opt/boxen/data/socket
 test:
-  adapter: postgresql
+  adapter: mysql2
+  encoding: utf8
+  database: foodudes_test
   host: localhost
-  username: user
-  database: app-dev
+  username: root
+  password:
+  port: 13306
+  socket: /opt/boxen/data/socket
 production:
   adapter: postgresql
   host: localhost

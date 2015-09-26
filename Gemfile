@@ -24,9 +24,8 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem "ttnt"
 
-
 group :test, :development do
-  gem "mysql2"
+  gem "mysql2", "~> 0.3.13"
   gem "better_errors"
   gem "spring"
   gem "factory_girl_rails"

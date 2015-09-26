@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe User, :type => :model do
 
-  before do 
+  before do
     @user1 = User.create!( :fb_uid => '111', :fb_token => "aaa")
     @user2 = User.create!( :fb_uid => '222', :fb_token => "bbb")
     @user3 = User.create!( :mobile_id => '123')
@@ -16,11 +16,11 @@ RSpec.describe User, :type => :model do
     }
   end
 
-  it "should initialize relationship from db" do    
+  it "should initialize relationship from db" do
     fb_graph = double("graph")
     expect(Koala::Facebook::API).to receive(:new).with(@user2.fb_token).and_return(fb_graph)
     expect(fb_graph).to receive(:get_connections).and_return( [{ 'id' => @user1.fb_uid }] )
-  
+
     # execute
     @user2.initialize_relationship_from_fb
 
@@ -41,12 +41,7 @@ RSpec.describe User, :type => :model do
   end
 
   it "should modified mobile id" do
-    user = User.modified_mobile_id( { :mobile_id => '123' } )
+    user = User.modify_mobile_id( { :mobile_id => '123' } )
     expect(user.mobile_id).to_not eq('123')
   end
 end
-
-
-
-
-

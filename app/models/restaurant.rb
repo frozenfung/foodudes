@@ -26,7 +26,7 @@ class Restaurant < ActiveRecord::Base
   protected
 
   def self.name_and_location_scope(name, lat, lng)
-    where(:name => name).where(:lat => lat).where(:lng => lng)
+    where(name: name, lat: lat, lng: lng)
   end
 
 end
