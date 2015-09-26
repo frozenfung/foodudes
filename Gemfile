@@ -22,6 +22,8 @@ gem 'bootstrap-sass', '~> 3.3.1'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
+gem "ttnt"
+
 
 group :test, :development do
   gem "mysql2"
