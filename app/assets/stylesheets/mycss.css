@@ -166,10 +166,10 @@ h2{
      -moz-border-radius: 10px;
        -o-border-radius: 10px;
           border-radius: 10px;
-  -webkit-box-shadow: 2px 2px 3px 3px #666;
+  /*-webkit-box-shadow: 2px 2px 3px 3px #666;
      -moz-box-shadow: 2px 2px 3px 3px #666;
        -o-box-shadow: 2px 2px 3px 3px #666;
-          box-shadow: 2px 2px 3px 3px #666;
+          box-shadow: 2px 2px 3px 3px #666;*/
   padding: 20px;
   opacity: 0;
   -webkit-transition: all .7s;
