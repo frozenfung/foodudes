@@ -1,11 +1,9 @@
-[Try it now](http://foodudes.herokuapp.com)
-
+[Try it right now!](https://foodudes.herokuapp.com)
 
 ## What is foodudes?
 
-It's a restaurant recommended service. What is unique is that all recommendations are from your facebook friends.
-
-## How it works?
+It's a platform for friend-based recommended restaurants.
+All recommended restaurants are exactly by your friends on facebook.
 
 ### Find a restaurant
 
