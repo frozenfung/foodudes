@@ -5,8 +5,6 @@ development:
   host: localhost
   username: root
   password:
-  port: 13306
-  socket: /opt/boxen/data/socket
 test:
   adapter: mysql2
   encoding: utf8
@@ -14,8 +12,6 @@ test:
   host: localhost
   username: root
   password:
-  port: 13306
-  socket: /opt/boxen/data/socket
 production:
   adapter: postgresql
   host: localhost
